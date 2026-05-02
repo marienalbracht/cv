@@ -437,12 +437,21 @@ body.hero-active {
 
 /* Categorie-labels in competenties dashboard tile */
 .dash-skill-cat {
-  font-size: .78rem; font-weight: 700; color: var(--color-blue);
-  text-transform: uppercase; letter-spacing: .06em;
-  padding: .18rem 0; border-bottom: 1px solid var(--color-blue3);
-  margin-bottom: .32rem;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: .76rem; font-weight: 600; color: var(--color-text);
+  text-transform: none; letter-spacing: 0;
+  padding: .22rem 0; border-bottom: 1px solid var(--color-blue3);
+  margin-bottom: .28rem; gap: .5rem;
 }
 .dash-skill-cat:last-child { border-bottom: none; margin-bottom: 0; }
+.dash-skill-cat-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dash-skill-dots { display: flex; gap: .18rem; flex-shrink: 0; }
+.dash-skill-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--color-blue3); border: 1px solid var(--color-blue);
+  flex-shrink: 0;
+}
+.dash-skill-dot--on { background: var(--color-blue); }
 .dash-mini-label {
   font-size: .75rem; color: var(--color-text); display: flex;
   justify-content: space-between; margin-bottom: .2rem;

@@ -124,9 +124,15 @@ function buildDashboard() {
       id: 'skills',
       icon: '⚡',
       title: 'Competenties',
-      preview: (d.skills || []).map(cat =>
-        `<div class="dash-skill-cat">${escHtml(cat.category)}</div>`
-      ).join(''),
+      preview: (d.skills || []).map(cat => {
+        const avg = cat.items.reduce((s, i) => s + (i.score || 0), 0) / (cat.items.length || 1);
+        const rounded = Math.round(avg);
+        const dots = Array.from({length: 5}, (_, i) =>
+          `<span class="dash-skill-dot${i < rounded ? ' dash-skill-dot--on' : ''}"></span>`
+        ).join('');
+        const shortName = cat.category.replace('Projectmanagement', 'Projectman.');
+        return `<div class="dash-skill-cat"><span class="dash-skill-cat-name">${escHtml(shortName)}</span><span class="dash-skill-dots">${dots}</span></div>`;
+      }).join(''),
       cta: 'Alle competenties →',
     },
     {
