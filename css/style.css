@@ -474,10 +474,10 @@ body.hero-active {
 .dash-badge--edu { background: rgba(0,95,170,.12); color: var(--color-blue); border-color: rgba(0,95,170,.25); }
 .dash-badge--gov { background: rgba(245,159,57,.12); color: #b8720a; border-color: rgba(245,159,57,.3); }
 /* Hobby emoji row */
-.dash-hobbies { display: grid; grid-template-columns: 1fr 1fr; gap: .35rem .5rem; }
-.dash-hobby { display: flex; align-items: center; gap: .35rem; font-size: .8rem; white-space: nowrap; overflow: hidden; }
-.dash-hobby-icon { font-size: 1.1rem; flex-shrink: 0; }
-.dash-hobby-name { overflow: hidden; text-overflow: ellipsis; color: var(--color-text); }
+.dash-hobbies { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem .5rem; }
+.dash-hobby { display: flex; align-items: flex-start; gap: .3rem; font-size: .78rem; }
+.dash-hobby-icon { font-size: 1.05rem; flex-shrink: 0; line-height: 1.4; }
+.dash-hobby-name { color: var(--color-text); line-height: 1.35; word-break: break-word; }
 
 /* --------------------------------------------------------
    GENERAL SECTION LAYOUT
