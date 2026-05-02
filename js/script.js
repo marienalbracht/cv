@@ -147,7 +147,7 @@ function buildDashboard() {
       icon: '🎸',
       title: "Persoonlijk",
       previewFn: () => `<div class="dash-hobbies">${
-        (d.hobbies || []).map(h => `<span class="dash-hobby" title="${escHtml(h.name)}">${h.icon} <span style="font-size:.72rem">${escHtml(h.name)}</span></span>`).join('')
+        (d.hobbies || []).map(h => `<span class="dash-hobby" title="${escHtml(h.name)}"><span class="dash-hobby-icon">${h.icon}</span><span class="dash-hobby-name">${escHtml(h.name)}</span></span>`).join('')
       }</div>`,
       cta: 'Bekijk interesses →',
     },
