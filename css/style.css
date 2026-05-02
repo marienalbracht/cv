@@ -939,56 +939,64 @@ body.hero-active {
 .skill-dot--filled { background: var(--color-blue); }
 
 /* --------------------------------------------------------
-   PROJECTS — klantentabel
+   PROJECTS — kaarten per jaar
 -------------------------------------------------------- */
 .section-subtitle {
   text-align: center; color: var(--color-muted); font-size: .88rem;
   margin-top: -.5rem; margin-bottom: 2rem; font-style: italic;
 }
-.clients-table-wrap {
-  border-radius: var(--r-lg); overflow: hidden;
-  border: var(--border-card); box-shadow: var(--shadow-sm);
+
+/* Kaarten container */
+.clients-cards {
+  display: flex; flex-direction: column; gap: 1.25rem;
 }
-.clients-table {
-  width: 100%; border-collapse: collapse;
-  background: var(--bg-card); color: var(--color-text);
-  font-size: .87rem; font-family: var(--font-body);
+
+/* Jaar-kaart */
+.client-card {
+  background: var(--bg-card);
+  border: var(--border-card);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
 }
-.clients-table thead tr {
-  background: var(--color-blue);
-  border-bottom: none;
-}
-.clients-table th {
-  padding: .8rem 1.2rem; text-align: left;
-  font-size: .72rem; font-weight: 900; letter-spacing: .09em;
-  text-transform: uppercase; color: rgba(255,255,255,.85);
-  font-family: var(--font-heading);
-}
-.clients-table th:first-child { width: 100px; }
-.clients-table tbody tr {
+.client-card-year {
+  padding: .65rem 1.4rem;
+  font-size: .8rem; font-weight: 900; letter-spacing: .06em;
+  text-transform: uppercase; font-family: var(--font-heading);
+  color: var(--color-blue);
   border-bottom: 1px solid var(--color-blue3);
-  transition: background var(--t-fast);
+  background: rgba(215,234,255,.35);
 }
-.clients-table tbody tr:last-child { border-bottom: none; }
-.clients-table tbody tr:hover { background: var(--color-blue3); }
-.clients-table td { padding: .85rem 1.2rem; vertical-align: top; }
-.clients-year {
-  font-weight: 900; color: var(--color-blue);
-  font-family: var(--font-heading); font-size: .9rem;
-  white-space: nowrap;
+.client-card-cols {
+  display: grid; grid-template-columns: 1fr 1fr;
 }
+.client-col {
+  padding: 1.1rem 1.4rem;
+}
+.client-col--edu {
+  border-right: 1px solid var(--color-blue3);
+}
+.client-col-label {
+  font-size: .72rem; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; font-family: var(--font-heading);
+  margin-bottom: .65rem;
+}
+.client-col--edu .client-col-label { color: var(--color-blue); }
+.client-col--gov .client-col-label { color: #c05c00; }
+
+.client-col-tags { display: flex; flex-wrap: wrap; gap: .3rem; }
+
 .client-tag {
-  display: inline-block; font-size: .75rem; font-weight: 500;
-  padding: .18rem .6rem; border-radius: var(--r-full);
-  margin: .18rem .18rem 0 0;
+  display: inline-block; font-size: .76rem; font-weight: 500;
+  padding: .22rem .7rem; border-radius: var(--r-full);
 }
 .client-tag--edu {
   background: var(--color-blue3); color: var(--color-blue);
-  border: 1px solid rgba(0,95,170,.25);
+  border: 1px solid rgba(0,95,170,.22);
 }
 .client-tag--gov {
-  background: #fff4e0; color: #a06000;
-  border: 1px solid rgba(245,159,57,.4);
+  background: #fde8cc; color: #9a4200;
+  border: 1px solid rgba(245,120,0,.35);
 }
 
 /* --------------------------------------------------------
@@ -1535,9 +1543,8 @@ body.hero-active {
   .skills-grid { grid-template-columns: 1fr; gap: .75rem; }
 
   /* ── PROJECTEN ── */
-  .clients-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .clients-table { min-width: 480px; }
-  .clients-table th, .clients-table td { padding: .65rem .85rem; font-size: .8rem; }
+  .client-card-cols { grid-template-columns: 1fr; }
+  .client-col--edu { border-right: none; border-bottom: 1px solid var(--color-blue3); }
 
   /* ── HOBBIES / PERSOONLIJK ── */
   .hobbies-section { padding: 0; }

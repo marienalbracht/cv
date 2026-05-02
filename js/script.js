@@ -760,8 +760,8 @@ function buildSkills() {
 
 /* ---- Projects ---- */
 function buildProjects() {
-  const tbody = document.getElementById('clients-tbody');
-  if (!tbody) return;
+  const wrap = document.getElementById('clients-cards');
+  if (!wrap) return;
 
   const rows = [
     {
@@ -781,12 +781,24 @@ function buildProjects() {
     },
   ];
 
-  tbody.innerHTML = rows.map(r => `
-    <tr>
-      <td class="clients-year">${escHtml(r.jaar)}</td>
-      <td>${r.onderwijs.map(n => `<span class="client-tag client-tag--edu">${escHtml(n)}</span>`).join('')}</td>
-      <td>${r.overheid.map(n => `<span class="client-tag client-tag--gov">${escHtml(n)}</span>`).join('')}</td>
-    </tr>
+  wrap.innerHTML = rows.map(r => `
+    <div class="client-card">
+      <div class="client-card-year">${escHtml(r.jaar)}</div>
+      <div class="client-card-cols">
+        <div class="client-col client-col--edu">
+          <div class="client-col-label">🏫 Onderwijs</div>
+          <div class="client-col-tags">
+            ${r.onderwijs.map(n => `<span class="client-tag client-tag--edu">${escHtml(n)}</span>`).join('')}
+          </div>
+        </div>
+        <div class="client-col client-col--gov">
+          <div class="client-col-label">🏛️ Overheid / Publiek</div>
+          <div class="client-col-tags">
+            ${r.overheid.map(n => `<span class="client-tag client-tag--gov">${escHtml(n)}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
   `).join('');
 }
 
