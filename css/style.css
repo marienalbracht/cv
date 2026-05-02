@@ -1431,6 +1431,33 @@ body.hero-active {
   .container { padding: 0 1.25rem; }
   .section-title { font-size: 1.7rem; margin-bottom: 1.5rem; }
 
+  /* ── RESET 100vh-secties: laat ze op mobiel vrij stromen ── */
+  .hero,
+  .dashboard-section,
+  #about.section,
+  #experience.section,
+  #education.section,
+  #skills.section,
+  #projects.section,
+  .hobbies-section,
+  #references.section,
+  #contact.section {
+    height: auto !important;
+    max-height: none !important;
+    min-height: unset !important;
+    overflow: visible !important;
+  }
+  /* Hero mag wél een mooie minimum-hoogte houden */
+  .hero { min-height: calc(100svh - 52px) !important; overflow: hidden !important; }
+  /* Dashboard: gewoon auto hoogte */
+  .dashboard-section { padding: 3rem 0 2.5rem !important; justify-content: flex-start !important; }
+  /* Hobbies layout: grid → flex column (niet hidden) */
+  .hobbies-section { padding: 0 !important; }
+  .hobbies-layout { overflow: visible !important; }
+  /* Experience & education container: geen flex overflow clipping */
+  #experience .container,
+  #education .container { overflow: visible !important; flex: none !important; }
+
   /* ── Hamburger & Sidebar ── */
   #navbar {
     width: 240px; bottom: 0;
@@ -1443,10 +1470,11 @@ body.hero-active {
 
   /* ── HERO ── */
   .hero {
-    min-height: 100svh;
-    padding: 4.5rem 1.5rem 5rem;
+    padding: 3.5rem 1.5rem 4rem;
     gap: 1.2rem;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
   .hero-content {
     flex-direction: column;
@@ -1471,7 +1499,6 @@ body.hero-active {
   .scroll-indicator { display: none; }
 
   /* ── DASHBOARD ── */
-  .dashboard-section { padding: 2.5rem 0; }
   .dashboard-grid { grid-template-columns: 1fr 1fr; gap: .9rem; }
   .dashboard-tile { padding: 1rem 1rem .9rem; }
   .dash-tile-icon { font-size: 1.4rem; }
