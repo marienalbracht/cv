@@ -199,8 +199,9 @@ body.hero-active {
 }
 .hero-avatar img,
 .hero-avatar .avatar-placeholder {
-  width: 130px; height: 130px; border-radius: 50%;
-  object-fit: cover; border: 3px solid var(--bg-dark);
+  width: 155px; height: 155px; border-radius: 50%;
+  object-fit: cover; object-position: center 15%;
+  border: 3px solid var(--bg-dark);
   display: flex; align-items: center; justify-content: center;
   font-size: 3rem; background: #003970;
 }
@@ -1509,7 +1510,7 @@ body.hero-active {
   .hero-left { align-items: center; max-width: 100%; gap: .6rem; }
   .hero-right { width: 100%; display: flex; justify-content: center; }
   .hero-avatar img,
-  .hero-avatar .avatar-placeholder { width: 110px; height: 110px; }
+  .hero-avatar .avatar-placeholder { width: 130px; height: 130px; object-position: center 15%; }
   .hero-name { font-size: 2.2rem; }
   .hero-highlights { grid-template-columns: repeat(2,1fr); gap: .5rem; }
   .hero-actions { justify-content: center; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
@@ -1603,7 +1604,7 @@ body.hero-active {
   .hero-name { font-size: 1.9rem; }
   .hero-title-wrap { font-size: .82rem; }
   .hero-avatar img,
-  .hero-avatar .avatar-placeholder { width: 95px; height: 95px; }
+  .hero-avatar .avatar-placeholder { width: 110px; height: 110px; object-position: center 15%; }
   .hero-highlights { grid-template-columns: 1fr 1fr; gap: .4rem; }
   .hero-highlight { padding: .5rem .6rem; }
   .hero-highlight-val { font-size: .95rem; }
