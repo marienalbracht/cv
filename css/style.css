@@ -1418,81 +1418,178 @@ body.hero-active {
   .exp-gantt { overflow-x: auto; }
 }
 
+/* =============================================
+   MOBIEL — 768px
+   ============================================= */
 @media (max-width: 768px) {
-  :root { --section-gap: 50px; }
+  :root { --section-gap: 0px; }
 
-  /* Layout */
+  /* ── Basis ── */
   body { padding-left: 0; padding-top: 52px; }
-  .section { padding: 2.5rem 0; }
-  .container { padding: 0 1rem; }
+  .section { padding: 3rem 0 2rem; }
+  .section--alt { padding: 3rem 0 2rem; }
+  .container { padding: 0 1.25rem; }
+  .section-title { font-size: 1.7rem; margin-bottom: 1.5rem; }
 
-  /* Sidebar */
+  /* ── Hamburger & Sidebar ── */
   #navbar {
-    width: 220px; bottom: 0;
-    transform: translateX(-220px);
+    width: 240px; bottom: 0;
+    transform: translateX(-240px);
     border-right: 1px solid rgba(255,255,255,.1);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
   }
   #navbar.open { transform: translateX(0); }
   .hamburger { display: flex; }
 
-  /* Hero */
-  .hero { padding: 3.5rem 1.2rem 3rem; }
-  .hero-content { flex-direction: column; text-align: center; gap: 1.5rem; }
-  .hero-left { align-items: center; max-width: none; }
-  .hero-highlights { grid-template-columns: repeat(2,1fr); }
-  .hero-avatar img, .hero-avatar .avatar-placeholder { width: 130px; height: 130px; }
-  .hero-actions { justify-content: center; flex-wrap: wrap; gap: .6rem; }
-  .hero-summary { text-align: left; }
-  .hero-name { font-size: 2.4rem; }
-  .ask-bar-wrap { max-width: 100%; }
-  .ask-bar { font-size: .85rem; }
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh;
+    padding: 4.5rem 1.5rem 5rem;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+  .hero-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    width: 100%;
+  }
+  .hero-left { align-items: center; max-width: 100%; gap: .6rem; }
+  .hero-right { width: 100%; display: flex; justify-content: center; }
+  .hero-avatar img,
+  .hero-avatar .avatar-placeholder { width: 110px; height: 110px; }
+  .hero-name { font-size: 2.2rem; }
+  .hero-highlights { grid-template-columns: repeat(2,1fr); gap: .5rem; }
+  .hero-actions { justify-content: center; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
+  .hero-actions .btn-primary,
+  .hero-actions .btn-outline,
+  .hero-actions .btn-ghost { font-size: .82rem; padding: .65rem 1.3rem; }
+  .hero-summary { text-align: center; font-size: .88rem; }
+  .ask-bar-wrap { width: 100%; max-width: 100%; margin-top: .25rem; }
+  .ask-bar { font-size: .84rem; }
+  .scroll-indicator { display: none; }
 
-  /* Dashboard */
-  .dashboard-grid { grid-template-columns: 1fr 1fr; gap: .85rem; }
-  .dashboard-tile { padding: 1.1rem; }
+  /* ── DASHBOARD ── */
+  .dashboard-section { padding: 2.5rem 0; }
+  .dashboard-grid { grid-template-columns: 1fr 1fr; gap: .9rem; }
+  .dashboard-tile { padding: 1rem 1rem .9rem; }
+  .dash-tile-icon { font-size: 1.4rem; }
+  .dash-tile-title { font-size: .95rem; }
+  .dash-tile-preview { font-size: .78rem; }
 
-  /* Grids */
-  .about-grid, .skills-grid, .references-grid { grid-template-columns: 1fr; }
-  .projects-grid { grid-template-columns: 1fr; }
-  .certificates-grid { grid-template-columns: repeat(2,1fr); }
-  .hobbies-grid { grid-template-columns: repeat(2,1fr); }
+  /* ── OVER MIJ ── */
+  .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
   .stats-grid { grid-template-columns: repeat(2,1fr); gap: .75rem; }
+  .stat-card { padding: 1rem .75rem; }
+  .stat-number { font-size: 1.9rem; }
 
-  /* Gantt tijdlijn */
-  .exp-gantt, #experience-timeline, #education-timeline { overflow-x: auto; }
-  .exp-gantt-body { min-width: 480px; }
-  .exp-gantt-axis { min-width: 480px; }
-  .exp-detail-panel { margin-top: 1rem; }
+  /* ── GANTT TIJDLIJN ── */
+  #experience-timeline,
+  #education-timeline { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .exp-gantt { min-width: 520px; }
+  .exp-gantt-body { min-width: 520px; }
+  .exp-gantt-axis { min-width: 520px; }
+  .exp-detail-panel { margin-top: 1.25rem; border-radius: var(--r-md); }
   .exp-detail-header { flex-direction: column; gap: .75rem; }
+  .exp-detail-inner { padding: 1.1rem; }
+  .exp-detail-role { font-size: 1rem; }
 
-  /* Hobbies */
-  .hobbies-layout { display: flex; flex-direction: column; }
-  .hobbies-left { border-right: none; border-bottom: 1px solid var(--border-card); padding: 1.5rem 1rem; }
-  .hobbies-right { padding: 1rem; min-height: 280px; }
-  .hobbies-grid { flex-direction: row; flex-wrap: wrap; }
-  .hobby-photo-img { max-height: 260px; }
+  /* ── COMPETENTIES ── */
+  .skills-grid { grid-template-columns: 1fr; gap: .75rem; }
 
-  /* Overig */
+  /* ── PROJECTEN ── */
+  .clients-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .clients-table { min-width: 480px; }
+  .clients-table th, .clients-table td { padding: .65rem .85rem; font-size: .8rem; }
+
+  /* ── HOBBIES / PERSOONLIJK ── */
+  .hobbies-section { padding: 0; }
+  .hobbies-layout {
+    display: flex; flex-direction: column;
+    min-height: unset;
+  }
+  .hobbies-left {
+    border-right: none;
+    border-bottom: 1px solid var(--border-card);
+    padding: 2rem 1.25rem 1.5rem;
+  }
+  .hobbies-right {
+    padding: 1.25rem;
+    min-height: 300px;
+    background: var(--bg-primary);
+  }
+  .hobbies-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: .6rem;
+  }
+  .hobby-item { padding: .6rem .75rem; }
+  .hobby-photo-img { max-height: 300px; border-radius: var(--r-md); }
+
+  /* ── REFERENTIES ── */
+  .references-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .references-note { font-size: .85rem; padding: .65rem 1.1rem; }
+
+  /* ── CONTACT ── */
+  .contact-grid { gap: 1rem; }
+
+  /* ── OVERIG ── */
   .timeline-header { flex-direction: column; gap: .5rem; }
   .timeline-header-right { align-self: flex-start; }
-  .section-title { font-size: 1.8rem; }
-  .clients-table th, .clients-table td { padding: .6rem .75rem; font-size: .8rem; }
-  .clients-table th:first-child { width: 70px; }
-  .references-note { font-size: .82rem; padding: .55rem 1rem; }
+  .about-grid, .references-grid { grid-template-columns: 1fr; }
+  .section-next { margin-bottom: .5rem; }
+  .chat-window { width: calc(100vw - 1.5rem); right: .75rem; bottom: .75rem; max-height: 70vh; }
 }
 
+/* =============================================
+   KLEIN MOBIEL — 480px
+   ============================================= */
 @media (max-width: 480px) {
-  .hobbies-grid      { grid-template-columns: repeat(2,1fr); }
-  .certificates-grid { grid-template-columns: 1fr; }
-  .stats-grid        { grid-template-columns: 1fr 1fr; }
-  .dashboard-grid    { grid-template-columns: 1fr; }
-  .hero-highlights   { grid-template-columns: 1fr 1fr; }
-  .hero-name         { font-size: 2rem; }
-  .hero-title        { font-size: .95rem; }
-  .skill-category    { padding: .9rem 1rem; }
-  .exp-detail-inner  { padding: 1rem; }
-  .section-title     { font-size: 1.5rem; }
-  .dashboard-tile    { padding: .9rem; }
-  .dash-tile-title   { font-size: .95rem; }
-  .chat-window       { width: calc(100vw - 2rem); right: 1rem; bottom: 1rem; }
+  .container { padding: 0 1rem; }
+  .section-title { font-size: 1.45rem; }
+
+  /* Hero */
+  .hero { padding: 4rem 1rem 4.5rem; }
+  .hero-name { font-size: 1.9rem; }
+  .hero-title-wrap { font-size: .82rem; }
+  .hero-avatar img,
+  .hero-avatar .avatar-placeholder { width: 95px; height: 95px; }
+  .hero-highlights { grid-template-columns: 1fr 1fr; gap: .4rem; }
+  .hero-highlight { padding: .5rem .6rem; }
+  .hero-highlight-val { font-size: .95rem; }
+  .hero-highlight-label { font-size: .62rem; }
+  .hero-actions .btn-primary,
+  .hero-actions .btn-outline,
+  .hero-actions .btn-ghost { font-size: .78rem; padding: .6rem 1.1rem; }
+
+  /* Dashboard: 1 kolom */
+  .dashboard-grid { grid-template-columns: 1fr; gap: .75rem; }
+  .dashboard-tile { display: flex; align-items: flex-start; gap: .9rem; padding: 1rem; }
+  .dash-tile-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .dash-tile-body { flex: 1; min-width: 0; }
+  .dash-tile-preview { margin-top: .3rem; }
+
+  /* Stats 2-koloms */
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: .6rem; }
+  .stat-card { padding: .85rem .6rem; }
+  .stat-number { font-size: 1.7rem; }
+
+  /* Skills */
+  .skill-category { padding: .85rem 1rem; }
+  .skill-dots { gap: .2rem; }
+  .skill-dot { width: 9px; height: 9px; }
+
+  /* Gantt */
+  .exp-gantt { min-width: 400px; }
+  .exp-gantt-body { min-width: 400px; }
+  .exp-gantt-axis { min-width: 400px; }
+
+  /* Hobbies */
+  .hobbies-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Chatbot */
+  .chat-window { width: calc(100vw - 1rem); right: .5rem; bottom: .5rem; }
+  .chat-header-name { font-size: .88rem; }
+  .chat-header-sub { font-size: .72rem; }
 }
