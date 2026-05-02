@@ -1,0 +1,207 @@
+/*
+  ================================================
+    MARIEN ALBRACHT — CV WEBSITE
+    animations.css — @keyframes & scroll reveals
+  ================================================
+*/
+
+/* --------------------------------------------------------
+   @KEYFRAMES
+-------------------------------------------------------- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: .4; transform: scale(1); }
+  50%       { opacity: .7; transform: scale(1.06); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-9px); }
+}
+
+@keyframes rotateBorder {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: rotate(45deg) translate(0, 0); }
+  50%       { transform: rotate(45deg) translate(3px, 3px); }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* --------------------------------------------------------
+   HERO ENTRANCE (applied directly via animation property)
+   NOTE: these use animation shorthand with fill-mode "both"
+   so opacity starts at 0 until the delay fires.
+-------------------------------------------------------- */
+.hero-greeting {
+  opacity: 0;
+  animation: fadeInUp .8s ease .25s both;
+}
+.hero-name {
+  animation: fadeInUp .8s ease .45s both;
+}
+.hero-title-wrap {
+  opacity: 0;
+  animation: fadeInUp .8s ease .65s both;
+}
+.hero-subtitle {
+  opacity: 0;
+  animation: fadeInUp .8s ease .85s both;
+}
+.hero-actions {
+  opacity: 0;
+  animation: fadeInUp .8s ease 1.05s both;
+}
+.hero-avatar {
+  opacity: 0;
+  animation: fadeIn 1s ease .3s both;
+}
+.scroll-indicator {
+  opacity: 0;
+  animation: fadeIn 1s ease 2s both;
+}
+
+/* --------------------------------------------------------
+   SCROLL-REVEAL BASE STATES
+   Elements start invisible, JS adds .in-view class
+-------------------------------------------------------- */
+.section-title {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.section-title.in-view { opacity: 1; transform: translateY(0); }
+
+.about-text {
+  opacity: 0; transform: translateX(-30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.about-text.in-view { opacity: 1; transform: translateX(0); }
+
+.stats-grid {
+  opacity: 0; transform: translateX(30px);
+  transition: opacity .7s ease .15s, transform .7s ease .15s;
+}
+.stats-grid.in-view { opacity: 1; transform: translateX(0); }
+
+.timeline-item {
+  opacity: 0; transform: translateX(-20px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.timeline-item.in-view { opacity: 1; transform: translateX(0); }
+
+/* Staggered timeline items */
+.timeline-item:nth-child(1) { transition-delay: .05s; }
+.timeline-item:nth-child(2) { transition-delay: .12s; }
+.timeline-item:nth-child(3) { transition-delay: .19s; }
+.timeline-item:nth-child(4) { transition-delay: .26s; }
+.timeline-item:nth-child(5) { transition-delay: .33s; }
+
+.skill-category {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .6s ease, transform .6s ease, border-color .35s ease;
+}
+.skill-category.in-view { opacity: 1; transform: translateY(0); }
+
+.skills-grid .skill-category:nth-child(1) { transition-delay: .05s; }
+.skills-grid .skill-category:nth-child(2) { transition-delay: .12s; }
+.skills-grid .skill-category:nth-child(3) { transition-delay: .19s; }
+.skills-grid .skill-category:nth-child(4) { transition-delay: .26s; }
+
+.project-card {
+  opacity: 0; transform: translateY(26px);
+  transition: opacity .55s ease, transform .55s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.project-card.in-view { opacity: 1; transform: translateY(0); }
+
+.projects-grid .project-card:nth-child(1) { transition-delay: .05s; }
+.projects-grid .project-card:nth-child(2) { transition-delay: .13s; }
+.projects-grid .project-card:nth-child(3) { transition-delay: .21s; }
+.projects-grid .project-card:nth-child(4) { transition-delay: .29s; }
+
+.certificate-badge {
+  opacity: 0; transform: scale(.94);
+  transition: opacity .55s ease, transform .55s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.certificate-badge.in-view { opacity: 1; transform: scale(1); }
+
+.certificates-grid .certificate-badge:nth-child(1) { transition-delay: .05s; }
+.certificates-grid .certificate-badge:nth-child(2) { transition-delay: .13s; }
+.certificates-grid .certificate-badge:nth-child(3) { transition-delay: .21s; }
+
+.hobby-item {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.hobby-item.in-view { opacity: 1; transform: translateY(0); }
+
+.hobbies-grid .hobby-item:nth-child(1)  { transition-delay: .04s; }
+.hobbies-grid .hobby-item:nth-child(2)  { transition-delay: .09s; }
+.hobbies-grid .hobby-item:nth-child(3)  { transition-delay: .14s; }
+.hobbies-grid .hobby-item:nth-child(4)  { transition-delay: .19s; }
+.hobbies-grid .hobby-item:nth-child(5)  { transition-delay: .24s; }
+.hobbies-grid .hobby-item:nth-child(6)  { transition-delay: .29s; }
+
+/* Floating animation for hobby icons */
+.hobby-icon { animation: float 3.2s ease-in-out infinite; }
+.hobby-item:nth-child(2) .hobby-icon { animation-delay: .35s; }
+.hobby-item:nth-child(3) .hobby-icon { animation-delay: .70s; }
+.hobby-item:nth-child(4) .hobby-icon { animation-delay: 1.05s; }
+.hobby-item:nth-child(5) .hobby-icon { animation-delay: 1.40s; }
+.hobby-item:nth-child(6) .hobby-icon { animation-delay: 1.75s; }
+
+.contact-item {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease, border-color .35s ease, box-shadow .35s ease, background .35s ease;
+}
+.contact-item.in-view { opacity: 1; transform: translateY(0); }
+.contact-item:nth-child(1) { transition-delay: .05s; }
+.contact-item:nth-child(2) { transition-delay: .13s; }
+.contact-item:nth-child(3) { transition-delay: .21s; }
+.contact-item:nth-child(4) { transition-delay: .29s; }
+
+/* Stat cards */
+.stat-card {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity .5s ease, transform .5s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.stat-card.in-view { opacity: 1; transform: translateY(0); }
+.stats-grid .stat-card:nth-child(1) { transition-delay: .05s; }
+.stats-grid .stat-card:nth-child(2) { transition-delay: .12s; }
+.stats-grid .stat-card:nth-child(3) { transition-delay: .19s; }
+.stats-grid .stat-card:nth-child(4) { transition-delay: .26s; }

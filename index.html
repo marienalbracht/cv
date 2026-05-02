@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marien Albracht — Consultant HRM &amp; Payroll | AFAS Software</title>
+  <meta name="description" content="Online CV van Marien Albracht, Consultant HRM &amp; Payroll bij AFAS Software">
+
+  <!-- Google Fonts — AFAS Huisstijl: Roboto (koppen) + Open Sans (tekst) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <!-- Access gate: only allow on marienalbracht.cv or localhost -->
+  <script>
+    (function () {
+      const h = window.location.hostname;
+      const allowed = h === '' || h === 'localhost' || h === '127.0.0.1' || h.includes('marienalbracht.cv');
+      if (!allowed) {
+        document.documentElement.innerHTML = `
+          <!DOCTYPE html><html lang="nl"><head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <title>Toegang geweigerd</title>
+            <style>
+              *{margin:0;padding:0;box-sizing:border-box}
+              body{font-family:sans-serif;background:#f2f5f8;display:flex;align-items:center;justify-content:center;min-height:100vh;color:#1A1F24}
+              .gate{background:#fff;border-radius:16px;padding:3rem 2.5rem;max-width:420px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.1)}
+              .gate-icon{font-size:3rem;margin-bottom:1rem}
+              .gate-title{font-size:1.4rem;font-weight:700;margin-bottom:.75rem;color:#005FAA}
+              .gate-text{font-size:.95rem;color:#41474D;line-height:1.6}
+            </style>
+          </head><body>
+            <div class="gate">
+              <div class="gate-icon">🔒</div>
+              <div class="gate-title">Toegang niet mogelijk</div>
+              <div class="gate-text">Deze pagina is alleen toegankelijk via de persoonlijke link van Marien Albracht.</div>
+            </div>
+          </body></html>`;
+      }
+    })();
+  </script>
+
+  <!-- Particle Background -->
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- ======== NAVIGATION ======== -->
+  <nav id="navbar" role="navigation">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo">MA.</a>
+      <ul class="nav-links">        <li><a href="#dashboard">Mijn profiel</a></li>        <li><a href="#about">Over mij</a></li>
+        <li><a href="#experience">Ervaring</a></li>
+        <li><a href="#education">Opleiding</a></li>
+        <li><a href="#skills">Competenties</a></li>
+        <li><a href="#projects">Projecten</a></li>
+        <li><a href="#hobbies">Persoonlijk</a></li>
+        <li><a href="#references">Referenties</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-cta btn-print">⬇ Download CV</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu openen" aria-expanded="false">☰</button>
+    </div>
+  </nav>
+
+  <!-- Backdrop overlay voor mobiele sidebar -->
+  <div class="nav-backdrop" id="nav-backdrop"></div>
+
+  <!-- ======== HERO ======== -->
+  <section id="home" class="hero">
+    <div class="hero-center">
+      <div class="hero-avatar">
+        <img src="assets/profile.jpg" alt="Marien Albracht"
+             onerror="this.outerHTML='<div class=&quot;avatar-placeholder&quot;>👤</div>'">
+      </div>
+      <p class="hero-greeting">Profiel</p>
+      <h1 class="hero-name">Marien Albracht</h1>
+      <span class="hero-cv-badge">Curriculum Vitae</span>
+      <div class="hero-title-wrap">
+        <span id="typewriter"></span><span class="cursor"></span>
+      </div>
+
+      <!-- Prominente vraagbalk -->
+      <div class="ask-bar-wrap" id="ask-bar-wrap">
+        <p class="ask-bar-label">Wat wil je weten over mijn cv?</p>
+        <div class="ask-bar">
+          <span class="ask-bar-icon">💬</span>
+          <input type="text" id="ask-input" class="ask-input"
+                 placeholder="Bijv. 'Wat voor werk doet Marien?' of 'Welke opleiding heeft hij?'"
+                 autocomplete="off" spellcheck="false"
+                 aria-label="Stel een vraag aan Marien">
+          <button class="ask-btn" id="ask-btn" aria-label="Stuur vraag">→</button>
+        </div>
+      </div>
+
+      <!-- Subtiele KPI-balk -->
+      <div class="hero-highlights" id="hero-highlights"><!-- Populated by JS --></div>
+
+    </div>
+
+    <a href="#dashboard" class="scroll-indicator" aria-label="Naar mijn profiel">
+      <span>Naar mijn profiel</span>
+      <div class="scroll-arrow"></div>
+    </a>
+  </section>
+
+  <!-- ======== CHATBOT VENSTER ======== -->
+  <div class="chat-window" id="chat-window" aria-live="polite" aria-label="Chat met Marien" hidden>
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <img src="assets/profile.jpg" class="chat-avatar" alt="Marien">
+        <div>
+          <div class="chat-header-name">Marien Albracht</div>
+          <div class="chat-header-sub">Stel mij een vraag over mijn cv</div>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-minimize" id="chat-minimize" aria-label="Minimaliseer chat">&#8722;</button>
+        <button class="chat-close" id="chat-close" aria-label="Sluit chat">✕</button>
+      </div>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-row">
+      <input type="text" id="chat-followup" class="chat-followup-input"
+             placeholder="Vervolgvraag stellen…" autocomplete="off">
+      <button class="chat-send" id="chat-send" aria-label="Verstuur">→</button>
+    </div>
+  </div>
+
+  <!-- ======== DASHBOARD ======== -->
+  <section id="dashboard" class="dashboard-section">
+    <div class="container">
+      <div class="dashboard-intro">
+        <h2 class="dashboard-title">Mijn profiel</h2>
+        <p class="dashboard-subtitle">Klik op een onderdeel om meer te lezen</p>
+      </div>
+      <div class="dashboard-grid" id="dashboard-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+    <a href="#about" class="section-next"><span>over mij</span><div class="section-next-arrow"></div></a>
+  </section>
+
+  <!-- ======== OVER MIJ ======== -->
+  <section id="about" class="section section--alt">
+    <div class="container">
+      <h2 class="section-title">Over mij</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p id="about-summary"></p>
+          <p class="about-personal-link"><a href="#hobbies">Lees meer over mijn persoonlijke interesses →</a></p>
+        </div>
+        <div class="stats-grid" id="stats-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+    <a href="#experience" class="section-next"><span>Ervaring</span><div class="section-next-arrow"></div></a>
+  </section>
+
+  <!-- ======== WERKERVARING ======== -->
+  <section id="experience" class="section">
+    <div class="container">
+      <h2 class="section-title">Werkervaring</h2>
+      <div id="experience-timeline">
+          <!-- Populated by JS -->
+        </div>
+      <div class="exp-detail-panel" id="exp-detail-panel">
+        <!-- Populated by JS -->
+      </div>
+      <div id="exp-print-list" class="print-list"></div>
+    </div>
+    <a href="#education" class="section-next"><span>Opleiding</span><div class="section-next-arrow"></div></a>
+  </section>
+
+  <!-- ======== OPLEIDING ======== -->
+  <section id="education" class="section section--alt">
+    <div class="container">
+      <h2 class="section-title">Opleiding</h2>
+      <div id="education-timeline">
+        <!-- Populated by JS -->
+      </div>
+      <div class="edu-detail-panel" id="edu-detail-panel">
+        <!-- Populated by JS -->
+      </div>
+      <div id="edu-print-list" class="print-list"></div>
+      <div class="edu-diplomas" id="edu-diplomas">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+    <a href="#skills" class="section-next"><span>Competenties</span><div class="section-next-arrow"></div></a>
+  </section>
+
+  <!-- ======== COMPETENTIES ======== -->
+  <section id="skills" class="section">
+    <div class="container">
+      <h2 class="section-title">Competenties</h2>
+      <div class="skills-grid" id="skills-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+    <a href="#projects" class="section-next"><span>Projecten</span><div class="section-next-arrow"></div></a>
+  </section>
+
+  <!-- ======== PROJECTEN / KLANTEN ======== -->
+  <section id="projects" class="section section--alt">
+    <div class="container">
+      <h2 class="section-title">Klanten</h2>
+      <p class="section-subtitle">Organisaties begeleid bij hun AFAS-implementatie</p>
+      <div class="clients-table-wrap">
+        <table class="clients-table">
+          <thead>
+            <tr>
+              <th>Jaar</th>
+              <th>🏫 Onderwijs</th>
+              <th>🏦 Overheid / Publiek</th>
+            </tr>
+          </thead>
+          <tbody id="clients-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <a href="#hobbies" class="section-next"><span>Persoonlijk</span><div class="section-next-arrow"></div></a>
+  </section>
+
+  <!-- ======== HOBBY'S ======== -->
+  <section id="hobbies" class="section section--alt hobbies-section">
+    <div class="hobbies-layout">
+      <div class="hobbies-left">
+        <h2 class="section-title" style="text-align:left;margin-bottom:1.5rem;">Persoonlijk</h2>
+        <div class="hobbies-grid" id="hobbies-grid"><!-- Populated by JS --></div>
+      </div>
+      <div class="hobbies-right" id="hobbies-right">
+        <div class="hobby-photo-placeholder" id="hobby-photo-placeholder">
+          <span>👈 Klik op een hobby voor een foto</span>
+        </div>
+        <div class="hobby-photo-box" id="hobby-photo-box" hidden>
+          <img class="hobby-photo-img" id="hobby-photo-img" src="" alt="">
+          <video class="hobby-photo-img" id="hobby-photo-video" src="" controls playsinline hidden></video>
+          <p class="hobby-photo-caption" id="hobby-photo-caption"></p>
+        </div>
+      </div>
+    </div>
+    <a href="#references" class="section-next section-next--dark"><span>Referenties</span><div class="section-next-arrow"></div></a>
+  </section>
+
+  <!-- ======== REFERENTIES ======== -->
+  <section id="references" class="section">
+    <div class="container">
+      <h2 class="section-title">Referenties</h2>
+      <p class="references-note">Referenties zijn beschikbaar op aanvraag — klik om te onthullen.</p>
+      <div class="references-grid" id="references-grid">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+    <a href="#contact" class="section-next"><span>Contact</span><div class="section-next-arrow"></div></a>
+  </section>
+
+  <!-- ======== CONTACT ======== -->
+  <section id="contact" class="section section--alt">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact-grid" id="contact-grid">
+        <!-- Populated by JS -->
+      </div>
+      <p class="contact-footer">Beschikbaar voor nieuwe opdrachten &amp; samenwerkingen</p>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="container">
+      <span id="footer-name">Marien Albracht</span>
+      &nbsp;·&nbsp; Consultant HRM &amp; Payroll &nbsp;·&nbsp;
+      <span id="footer-year"></span>
+    </div>
+  </footer>
+
+  <!-- ======== PROJECT MODAL ======== -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-label="Project details">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modal-close" aria-label="Sluiten">✕</button>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ======== BACK TO TOP ======== -->
+  <button class="back-to-top" id="back-to-top" aria-label="Terug naar boven">↑</button>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
