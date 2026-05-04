@@ -145,7 +145,7 @@ const cvData = {
   education: [
     {
       logo:        "assets/RUG.png",
-      degree:      "Master Change Management | Business Administration",
+      degree:      "Change Management | Master Business Administration",
       school:      "Rijksuniversiteit Groningen",
       period:      "2019 - 2020",
       description: "Masterdiploma Change Management behaald in 2020. Afgestudeerd op de invloed van leiderschapsstijlen op identificatie bij een M&A. Conclusie: transformationeel leiderschap bevordert identificatie met de organisatie na een fusie.",

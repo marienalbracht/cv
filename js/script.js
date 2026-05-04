@@ -1320,7 +1320,10 @@ function initAskMarien() {
     // reset invoerveld
     if (document.getElementById('ask-input') === document.activeElement ||
         raw === input.value) input.value = '';
-    if (followup) followup.value = '';
+    if (followup) {
+      followup.value = '';
+      followup.placeholder = 'Vervolgvraag stellen…';
+    }
   }
 
   // Hero-balk
