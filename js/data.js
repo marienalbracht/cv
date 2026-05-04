@@ -32,7 +32,7 @@ const cvData = {
     { number:  2, suffix: "",  label: "Diploma's",      link: "#education"  },
   ],
 
-  summary: "Ik ben Marien Albracht, 32 jaar en woonachtig in Zwolle met mijn vrouw Charlotte. Dagelijks ben ik bezig om werk nog leuker en gemakkelijker te maken. Met onze software inspireer ik organisaties tot beter ondernemen en optimaliseer ik bedrijfsprocessen. Als consultant HRM & Payroll bij AFAS Software ben ik actief in de sector Overheid & Onderwijs. Daar begeleid ik jaarlijks tientallen kleine en grote organisaties tijdens implementatietrajecten van analyse- tot nazorgfase. Ik krijg energie van samenwerken, innovatieve oplossingen realiseren en mezelf blijven ontwikkelen.",
+  summary: "Ik ben Marien Albracht, 32 jaar, en woon in Zwolle met mijn vrouw Charlotte. Dagelijks inspireer ik organisaties om werk leuker en makkelijker te maken. Als consultant HRM & Payroll bij AFAS Software optimaliseer ik bedrijfsprocessen in de sectoren Overheid en Onderwijs. Jaarlijks begeleid ik tientallen kleine en grote organisaties tijdens implementatietrajecten, van analyse tot nazorg. Ik krijg energie van samenwerken, het realiseren van innovatieve oplossingen en mezelf continu blijven ontwikkelen.",
 
   experience: [
     {
@@ -45,7 +45,7 @@ const cvData = {
       type:    "Vast",
       summary: "In het team Overheid & Onderwijs van AFAS tientallen klanten geimplementeerd en bedrijfsprocessen geoptimaliseerd. Aanbestedingen met complexe projectstructuren en lange doorlooptijden.",
       details: [
-        "Projectbegeleiding bij instellingen van 1000+ FTE veelal na aanbestedingstrajecten",
+        "Projectbegeleiding bij organisaties van 1000+ FTE aanbestedingstrajecten",
         "Software-implementatie AFAS HRM & Payroll van analyse- tot nazorgfase",
         "Werken in klein team van 2-4 consultants met volledige projectverantwoordelijkheid",
         "Bedrijfsprocessen geoptimaliseerd via AFAS-platform voor overheid en onderwijs",
