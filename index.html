@@ -21,7 +21,8 @@
       const h = window.location.hostname;
       const allowed = h === '' || h === 'localhost' || h === '127.0.0.1'
         || h.includes('marienalbracht.cv')
-        || h.includes('marienalbracht') && h.includes('netlify.app');
+        || h.includes('marienalbracht') && h.includes('netlify.app')
+        || h.includes('pages.dev');
       if (!allowed) {
         document.documentElement.innerHTML = `
           <!DOCTYPE html><html lang="nl"><head>
