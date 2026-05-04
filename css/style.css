@@ -169,13 +169,12 @@ body.hero-active {
   position: relative; min-height: 100vh;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 4rem 2rem 4rem; overflow: hidden;
-  background: linear-gradient(135deg, var(--bg-dark) 0%, #003970 55%, var(--color-blue) 100%);
+  background: url('../assets/Achtergrond.jpg') center center / cover no-repeat;
   gap: 2rem;
 }
 .hero::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 15% 60%, rgba(0,116,208,.18) 0%, transparent 65%),
-              radial-gradient(ellipse 60% 50% at 85% 40%, rgba(245,159,57,.08) 0%, transparent 60%);
+  background: linear-gradient(160deg, rgba(10,25,47,.72) 0%, rgba(0,57,112,.55) 60%, rgba(0,95,170,.4) 100%);
   pointer-events: none;
 }
 /* Blauwe lijn onderaan hero — AFAS PowerPoint stijl */
@@ -321,13 +320,12 @@ body.hero-active {
   height: 100vh; max-height: 100vh;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 1.5rem 2rem 3rem; overflow: hidden;
-  background: linear-gradient(135deg, var(--bg-dark) 0%, #003970 55%, var(--color-blue) 100%);
+  background: url('../assets/Achtergrond.jpg') center center / cover no-repeat;
   box-sizing: border-box;
 }
 .hero::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,116,208,.18) 0%, transparent 65%),
-              radial-gradient(ellipse 60% 50% at 80% 70%, rgba(245,159,57,.07) 0%, transparent 60%);
+  background: linear-gradient(160deg, rgba(10,25,47,.72) 0%, rgba(0,57,112,.55) 60%, rgba(0,95,170,.4) 100%);
   pointer-events: none;
 }
 .hero::after {
