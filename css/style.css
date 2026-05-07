@@ -1609,9 +1609,7 @@ body.hero-active {
   box-shadow: 0 0 0 8px rgba(60,198,88,.2), 0 8px 40px rgba(60,198,88,.35);
 }
 .spider-center-label {
-  font-size: .72rem; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--color-orange);
-  font-family: var(--font-heading);
+  display: none;
 }
 
 /* Satelliet wrapper */
@@ -1711,19 +1709,8 @@ body.hero-active {
 
 /* Label onder de cirkel */
 .spider-sat-label {
-  font-size: clamp(.58rem, 1.4vw, .72rem); font-weight: 700;
-  letter-spacing: .08em; text-transform: uppercase;
-  color: rgba(255,255,255,.55); font-family: var(--font-heading);
-  transition: color var(--t-fast);
-  white-space: nowrap; display: flex; align-items: center; gap: .25rem;
+  display: none;
 }
-.spider-sat-label-num {
-  color: var(--color-orange); font-size: .9em;
-}
-.spider-sat:hover .spider-sat-label,
-.spider-sat.playing .spider-sat-label { color: var(--color-orange); }
-.spider-sat.watched .spider-sat-label { color: var(--color-green); }
-.spider-sat.watched .spider-sat-label .spider-sat-label-num { color: var(--color-green); }
 
 /* Circulaire achtergrondlijn */
 .video-spider::before {
