@@ -131,6 +131,13 @@ body.hero-active {
   color: white; background: rgba(255,255,255,.07);
   border-left-color: var(--color-orange);
 }
+.nav-link-sollicitatie {
+  color: var(--color-orange) !important;
+}
+.nav-link-sollicitatie:hover {
+  background: rgba(245,159,57,.12) !important;
+  border-left-color: var(--color-orange) !important;
+}
 
 .nav-cta {
   background: transparent; color: rgba(255,255,255,.6); border: none;

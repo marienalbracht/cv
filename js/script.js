@@ -1648,6 +1648,21 @@ function initSollicitatie() {
   trigger.addEventListener('click', () => openStage(false));
   backBtn.addEventListener('click', closeStage);
 
+  /* ── Nav-link Sollicitatie ── */
+  const navSoll = document.getElementById('nav-sollicitatie');
+  if (navSoll) {
+    navSoll.addEventListener('click', e => {
+      e.preventDefault();
+      // Sluit mobiele sidebar indien open
+      const sidebar = document.getElementById('navbar');
+      if (sidebar) sidebar.classList.remove('open');
+      const backdrop = document.getElementById('nav-backdrop');
+      if (backdrop) backdrop.classList.remove('active');
+      document.body.classList.remove('nav-open');
+      openStage(false);
+    });
+  }
+
   /* ── Deep-link: open overlay direct op juiste paneel bij laden pagina ── */
   function checkDeepLink() {
     const hash = location.hash;
