@@ -1738,15 +1738,17 @@ function initSollicitatie() {
     }
   }
 
-  /* ── Center video: hover start outro, klik toggle ── */
+  /* ── Center video: hover op poster start outro, klik toggle ── */
   if (introVideo) {
-    // Hover: toon outro direct als het al geladen is
-    introVideo.addEventListener('mouseenter', () => {
-      if (outroLoaded) {
-        introVideo.currentTime = 0;
-        introVideo.play().catch(() => {});
-      }
-    });
+    // Hover op de Samenvatting-poster → outro direct afspelen
+    if (centerPoster) {
+      centerPoster.addEventListener('mouseenter', () => {
+        if (outroLoaded) {
+          introVideo.currentTime = 0;
+          introVideo.play().catch(() => {});
+        }
+      });
+    }
     introVideo.addEventListener('click', () => {
       if (introVideo.paused) introVideo.play().catch(() => {});
       else introVideo.pause();

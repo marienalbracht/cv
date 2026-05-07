@@ -1608,6 +1608,7 @@ body.hero-active {
   transition: opacity .3s ease;
   opacity: 1;
   pointer-events: auto;
+  cursor: pointer;
 }
 .spider-center-poster[hidden] { display: none; }
 .spider-center-poster img {
@@ -1627,7 +1628,8 @@ body.hero-active {
   text-transform: uppercase; letter-spacing: .1em;
   text-align: center;
 }
-/* Poster verdwijnt bij hover → outro start */
+/* Poster verdwijnt bij hover op de poster zelf → outro start */
+.spider-center-poster:hover { opacity: 0; }
 .spider-center:hover .spider-center-poster { opacity: 0; }
 .spider-video--center {
   width: clamp(140px, 22vw, 210px);
