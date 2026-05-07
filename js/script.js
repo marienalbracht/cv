@@ -1536,6 +1536,7 @@ function initSollicitatie() {
   const centerLabel = document.getElementById('spider-center-label');
   const centerPoster= document.getElementById('spider-center-poster');
   const outroVideo  = document.getElementById('spider-outro-video');
+  const playPrompt  = document.getElementById('spider-play-prompt');
   const videoLink   = document.getElementById('soll-video-link');
   const spiderWrap  = document.getElementById('video-spider');
   const svgLines    = document.getElementById('spider-lines');
@@ -1546,6 +1547,17 @@ function initSollicitatie() {
   const watchedVideos = new Set();
   let outroLoaded = false;
   let outroPermVisible = false; // true als outro vast zichtbaar moet blijven (film 5 / alle 5 gezien)
+
+  /* ── Intro starten; bij autoplay-blokkade: toon klik-prompt ── */
+  function tryPlayIntro() {
+    if (!introVideo || outroLoaded) return;
+    introVideo.currentTime = 0;
+    introVideo.play().then(() => {
+      if (playPrompt) playPrompt.hidden = true;
+    }).catch(() => {
+      if (playPrompt) playPrompt.hidden = false;
+    });
+  }
 
   /* ── Toon Samenvatting-poster; optioneel outro permanent zichtbaar + autoplay ── */
   function showSamenvatting(showOutro, autoPlay) {
@@ -1590,6 +1602,7 @@ function initSollicitatie() {
     outroLoaded = false;
     outroPermVisible = false;
     if (centerPoster) { centerPoster.hidden = true; }
+    if (playPrompt)   { playPrompt.hidden = true; }
     if (outroVideo) { outroVideo.pause(); outroVideo.currentTime = 0; outroVideo.hidden = true; }
     if (introVideo) {
       introVideo.pause();
@@ -1665,10 +1678,7 @@ function initSollicitatie() {
         if (vs) vs.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(drawLines, 400);
         // Start intro direct — wacht niet op IntersectionObserver
-        if (introVideo) {
-          introVideo.currentTime = 0;
-          introVideo.play().catch(() => {});
-        }
+        tryPlayIntro();
       }, 350);
       history.replaceState(null, '', '#visie');
     } else {
@@ -1746,8 +1756,7 @@ function initSollicitatie() {
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && stage.classList.contains('active')) {
-          introVideo.currentTime = 0;
-          introVideo.play().catch(() => {});
+          tryPlayIntro();
           setTimeout(drawLines, 80);
         } else if (!entry.isIntersecting && stage.classList.contains('active')) {
           // Uit beeld: reset spider naar beginstaat
@@ -1888,11 +1897,24 @@ function initSollicitatie() {
     }
   }
 
+  /* ── Klik-om-te-starten prompt ── */
+  if (playPrompt) {
+    playPrompt.addEventListener('click', () => {
+      if (introVideo && !outroLoaded) {
+        playPrompt.hidden = true;
+        introVideo.play().catch(() => {});
+      }
+    });
+  }
+
   /* ── Center video: intro afgelopen → toon Samenvatting (hover toont outro in zelfde cirkel) ── */
   if (introVideo) {
     introVideo.addEventListener('ended', () => {
       showSamenvatting(false, false); // poster tonen, outro nog verborgen
       highlightNext(null);
+    });
+    introVideo.addEventListener('play', () => {
+      if (playPrompt) playPrompt.hidden = true;
     });
     introVideo.addEventListener('click', () => {
       if (!outroLoaded) {

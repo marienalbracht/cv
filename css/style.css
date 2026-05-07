@@ -1738,7 +1738,24 @@ body.hero-active {
   display: none;
 }
 
-/* Outro video overlay — verschijnt in center-cirkel bij hover/film5 */
+/* Klik-om-te-starten overlay — verschijnt als autoplay geblokkeerd is */
+.spider-play-prompt {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: clamp(140px, 20vw, 200px);
+  height: clamp(140px, 20vw, 200px);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.45);
+  color: #fff;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  cursor: pointer;
+  z-index: 6;
+  transition: background .2s ease;
+}
+.spider-play-prompt:hover { background: rgba(0,0,0,.6); }
+.spider-play-prompt[hidden] { display: none; }
 .spider-outro-video {
   position: absolute;
   top: 0; left: 50%;
