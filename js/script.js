@@ -1635,6 +1635,14 @@ function initSollicitatie() {
   trigger.addEventListener('click', openStage);
   backBtn.addEventListener('click', closeStage);
 
+  /* ── Naar sollicitatiebrief knop (vanuit video-paneel) ── */
+  const toLetterBtn = document.getElementById('soll-to-letter-btn');
+  if (toLetterBtn) {
+    toLetterBtn.addEventListener('click', () => {
+      document.getElementById('soll-stage').scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   /* ── Start intro wanneer video-paneel in beeld scrollt ── */
   const videoSection = document.getElementById('soll-video-section');
   if (videoSection && introVideo) {
