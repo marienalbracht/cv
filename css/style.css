@@ -110,10 +110,18 @@ body.hero-active {
 .nav-logo {
   font-family: var(--font-heading); font-size: 1.5rem; font-weight: 900;
   color: var(--color-orange); letter-spacing: -.01em;
-  padding: 1.7rem 1.5rem 1.5rem;
-  border-bottom: 1px solid rgba(255,255,255,.07);
+  padding: 1.7rem 1.5rem .9rem;
   flex-shrink: 0;
 }
+.nav-logo-soll {
+  font-family: var(--font-heading); font-size: .88rem; font-weight: 700;
+  color: rgba(255,255,255,.75); letter-spacing: .01em;
+  padding: .55rem 1.5rem 1.1rem;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  flex-shrink: 0;
+  transition: color var(--t-fast);
+}
+.nav-logo-soll:hover { color: var(--color-orange); }
 .nav-links {
   display: flex; flex-direction: column; gap: 0;
   flex: 1; padding: .65rem 0; overflow-y: auto;
