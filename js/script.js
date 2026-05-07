@@ -1742,7 +1742,16 @@ function initSollicitatie() {
     sat.addEventListener('mouseenter', startPlay);
     sat.addEventListener('mouseleave', stopPlay);
     sat.addEventListener('click', () => {
-      if (video.paused) startPlay(); else stopPlay();
+      if (video.paused) {
+        // Klik stopt de intro altijd, ook als die nog speelt
+        if (!outroLoaded && introVideo && !introVideo.paused) introVideo.pause();
+        pauseAllExcept(sat);
+        sat.classList.add('playing');
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      } else {
+        stopPlay();
+      }
     });
 
     video.addEventListener('ended', () => {
