@@ -1376,12 +1376,11 @@ function matchQuestion(q) {
   function has(...words) { return words.some(w => q.includes(w)); }
 
   // ── SOLLICITATIE (hoogste prioriteit) ──────────────────
-  if (has('sollicit', 'ambitie', 'droom', 'toekomst', 'volgende stap', 'groei', 'doorgroeien',
+  if (has('sollicit', 'ambitie', 'droom', 'toekomst', 'volgende stap', 'doorgroeien',
           'wil worden', 'sterk punt', 'sterkste punt', 'sterke kant', 'zwak', 'verbeterpunt',
-          'ontwikkelpunt', 'werkpunt', 'valkuil', 'projectleid', 'projectmanag', 'projectrol',
-          'projectverantwoordelijk', 'leidinggeven', 'regisseur', 'pl ', 'motivat',
+          'ontwikkelpunt', 'werkpunt', 'valkuil', 'motivat',
           'waarom afas', 'waarom projectleider', 'waarom sollicit', 'waarom deze functie',
-          'wat motiveert', 'wat drijft', 'kracht', 'onderscheid', 'wat maakt jou', 'fit',
+          'wat motiveert', 'wat drijft', 'onderscheid', 'wat maakt jou', 'fit',
           'verwacht', 'salaris', 'beschikbaar', 'startdat')) {
     return {
       text: 'Alles over mijn motivatie, ambities, sterke en verbeterpunten vind je in mijn sollicitatie. Ik open hem voor je!',
@@ -1390,15 +1389,25 @@ function matchQuestion(q) {
     };
   }
 
+  // ── PROJECTLEIDER / PROJECTMANAGEMENT ──────────────────
+  if (has('projectleid', 'projectmanag', 'projectrol', 'projectverantwoordelijk',
+          'leidinggeven', 'regisseur', 'pl-rol')) {
+    return {
+      text: 'Marien heeft ruime ervaring met projectleiding: bij AFAS stuurt hij implementatietrajecten aan in een team van 2–4 consultants (analyse t/m nazorg, 1000+ FTE organisaties). Bij KerkSterk was hij mede-eigenaar én projectleider van adviestrajecten. Bij Heroes of Work was hij Operational Manager en Product Owner in een Agile-team.',
+      section: 'experience', sectionLabel: 'Mijn werkervaring',
+    };
+  }
+
   // ── KWALITEITEN / FEEDBACK ANDEREN ─────────────────────
   if (has('kwaliteit', 'sterkste punt', 'sterk punt', 'anderen zeggen', 'collega',
           'feedback', 'wat zeggen', 'hoe omschrijven', 'omschrijven', 'sterke kant',
-          'eigenschap')) {
+          'eigenschap', 'kracht')) {
     const cl = cvData.coverLetter;
+    const topStrengths = cl ? cl.strengths.slice(0, 3).join(' • ') : '';
     return {
       text: cl
-        ? cl.colleaguesFeedback + ' Sterkste punten: ' + cl.strengths.slice(0, 3).join('; ') + '.'
-        : 'Collega\'s omschrijven mij als rustig, overtuigend en communicatief sterk.',
+        ? `Collega's omschrijven Marien als: ${cl.colleaguesFeedback} Zijn drie sterkste punten: ${topStrengths}.`
+        : 'Collega\'s omschrijven Marien als rustig, overtuigend en communicatief sterk.',
       section: 'about', sectionLabel: 'Over mij',
     };
   }
@@ -1407,7 +1416,7 @@ function matchQuestion(q) {
   if (has('getrouwd', 'partner', 'charlotte', 'vrouw', 'relatie',
           'oud', 'leeftijd', 'jaar', 'geboren', 'woon', 'zwolle', 'woont')) {
     return {
-      text: '32 jaar, woonachtig in Zwolle, getrouwd met Charlotte. Consultant HRM & Payroll bij AFAS in het team Overheid & Onderwijs.',
+      text: '32 jaar, woonachtig in Zwolle, getrouwd met Charlotte. Marien werkt als Consultant HRM & Payroll bij AFAS in het team Overheid & Onderwijs, vanuit Leusden.',
       section: 'about', sectionLabel: 'Over mij',
     };
   }
@@ -1421,8 +1430,9 @@ function matchQuestion(q) {
       q.includes(e.company.toLowerCase()) ||
       e.role.toLowerCase().split(' ').some(w => w.length > 3 && q.includes(w))
     ) || exps[0];
+    const topDetail = m.details ? m.details[0] : '';
     return {
-      text: `${m.role} bij ${m.company} (${m.period}). ${m.summary}`,
+      text: `${m.role} bij ${m.company} (${m.period}). ${m.summary}${topDetail ? ' Specifiek: ' + topDetail : ''}`,
       section: 'experience', sectionLabel: 'Mijn werkervaring',
     };
   }
@@ -1436,7 +1446,7 @@ function matchQuestion(q) {
       e.degree.toLowerCase().split(' ').some(w => w.length > 3 && q.includes(w))
     ) || edus[0];
     return {
-      text: `${m.degree} — ${m.school} (${m.period}).`,
+      text: `${m.degree} — ${m.school} (${m.period}). ${m.description}`,
       section: 'education', sectionLabel: 'Mijn opleiding',
     };
   }
@@ -1444,8 +1454,9 @@ function matchQuestion(q) {
   // ── VAARDIGHEDEN ────────────────────────────────────────
   if (has('vaardigheid', 'skill', 'goed in', 'expertise', 'kennis', 'software',
           'scrum', 'agile', 'communicat', 'leiderschap', 'presentat', 'tool')) {
+    const topItems = skls.flatMap(c => c.items.filter(i => i.score >= 5).map(i => i.name));
     return {
-      text: `Specialisaties: ${skls.map(c => c.category).join(' · ')}.`,
+      text: `Marien scoort het hoogst op: ${topItems.join(', ')}. Daarnaast sterk in Change Management, Projectleiding en Presenteren.`,
       section: 'skills', sectionLabel: 'Mijn competenties',
     };
   }
@@ -1468,8 +1479,10 @@ function matchQuestion(q) {
 
   // ── HOBBY'S ─────────────────────────────────────────────
   if (has('hobby', 'vrij', 'passie', 'muziek', 'sport', 'gitaar', 'zingen', 'lezen', 'reizen', 'kook')) {
+    const hs = cvData.hobbies;
+    const funfact = hs[0] ? hs[0].funfact : '';
     return {
-      text: `Buiten werk: ${cvData.hobbies.map(h => h.name).join(', ')}.`,
+      text: `Buiten werk houdt Marien zich bezig met: ${hs.map(h => h.icon + ' ' + h.name).join(', ')}. ${funfact}`,
       section: 'hobbies', sectionLabel: "Mijn hobby's",
     };
   }
@@ -1486,7 +1499,7 @@ function matchQuestion(q) {
   if (has('wie ben', 'wie is marien', 'over mij', 'jezelf', 'profiel', 'introduc',
           'vertel over', 'samenvatting', 'achtergrond')) {
     return {
-      text: 'Consultant HRM & Payroll bij AFAS (Overheid & Onderwijs). Master Change Management + Bachelor Psychologie (RUG). 7+ jaar ervaring, 40+ projecten.',
+      text: cvData.summary,
       section: 'about', sectionLabel: 'Over mij',
     };
   }
@@ -1622,6 +1635,9 @@ function initSollicitatie() {
     stage.hidden = false;
     requestAnimationFrame(() => { stage.classList.add('active'); });
     document.body.style.overflow = 'hidden';
+    // Verberg de zijbalk tijdens de overlay
+    const navbar = document.getElementById('navbar');
+    if (navbar) { navbar.classList.add('nav-hidden'); document.body.classList.add('hero-active'); }
     if (scrollToVideo) {
       // Scroll naar video-paneel na transitie
       setTimeout(() => {
@@ -1647,6 +1663,9 @@ function initSollicitatie() {
     stage.classList.remove('active');
     document.body.style.overflow = '';
     history.replaceState(null, '', '#');
+    // Herstel de zijbalk (IntersectionObserver neemt het daarna over)
+    const navbar = document.getElementById('navbar');
+    if (navbar) { navbar.classList.remove('nav-hidden'); document.body.classList.remove('hero-active'); }
     resetSpider();
     if (svgLines) svgLines.innerHTML = '';
     stage.addEventListener('transitionend', () => {
