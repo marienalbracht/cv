@@ -1737,6 +1737,9 @@ body.hero-active {
   font-size: .8rem; color: rgba(255,255,255,.35);
   font-family: var(--font-body); letter-spacing: .03em;
 }
+/* Verberg picture-in-picture knop */
+.spider-video::-webkit-media-controls-picture-in-picture-button { display: none !important; }
+.spider-video::-webkit-media-controls-overflow-button            { display: none !important; }
 
 /* --------------------------------------------------------
    SOLL STAGE — MOBIEL
