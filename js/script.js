@@ -1941,6 +1941,18 @@ function initSollicitatie() {
       if (centerPoster) centerPoster.hidden = false;
     });
   }
+
+  // Samenvatting-poster klik (mobiel: geen hover) → start outro in cirkel
+  if (centerPoster) {
+    centerPoster.addEventListener('click', () => {
+      if (!outroLoaded || !outroVideo) return;
+      centerPoster.hidden = true;
+      outroVideo.hidden = false;
+      outroVideo.currentTime = 0;
+      outroVideo.play().catch(() => {});
+    });
+  }
+
   if (outroVideo) {
     outroVideo.addEventListener('click', () => {
       if (outroVideo.paused) outroVideo.play().catch(() => {});
