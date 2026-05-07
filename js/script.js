@@ -1318,7 +1318,9 @@ function initAskMarien() {
     const result = matchQuestion(q.toLowerCase());
     setTimeout(() => {
       addMessage(result.text, 'bot', result);
-      if (result.section && !result.blocked) {
+      if (result.openSollicitatie && !result.blocked) {
+        setTimeout(() => { location.hash = '#sollicitatie'; }, 800);
+      } else if (result.section && !result.blocked) {
         setTimeout(() => {
           document.getElementById(result.section)
             .scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1373,33 +1375,31 @@ function matchQuestion(q) {
 
   function has(...words) { return words.some(w => q.includes(w)); }
 
+  // ── SOLLICITATIE (hoogste prioriteit) ──────────────────
+  if (has('sollicit', 'ambitie', 'droom', 'toekomst', 'volgende stap', 'groei', 'doorgroeien',
+          'wil worden', 'sterk punt', 'sterkste punt', 'sterke kant', 'zwak', 'verbeterpunt',
+          'ontwikkelpunt', 'werkpunt', 'valkuil', 'projectleid', 'projectmanag', 'projectrol',
+          'projectverantwoordelijk', 'leidinggeven', 'regisseur', 'pl ', 'motivat',
+          'waarom afas', 'waarom projectleider', 'waarom sollicit', 'waarom deze functie',
+          'wat motiveert', 'wat drijft', 'kracht', 'onderscheid', 'wat maakt jou', 'fit',
+          'verwacht', 'salaris', 'beschikbaar', 'startdat')) {
+    return {
+      text: 'Alles over mijn motivatie, ambities, sterke en verbeterpunten vind je in mijn sollicitatie. Ik open hem voor je!',
+      openSollicitatie: true,
+      sectionLabel: 'Sollicitatie',
+    };
+  }
+
   // ── KWALITEITEN / FEEDBACK ANDEREN ─────────────────────
   if (has('kwaliteit', 'sterkste punt', 'sterk punt', 'anderen zeggen', 'collega',
           'feedback', 'wat zeggen', 'hoe omschrijven', 'omschrijven', 'sterke kant',
-          'eigenschap', 'kracht', 'onderscheid')) {
+          'eigenschap')) {
     const cl = cvData.coverLetter;
     return {
       text: cl
         ? cl.colleaguesFeedback + ' Sterkste punten: ' + cl.strengths.slice(0, 3).join('; ') + '.'
         : 'Collega\'s omschrijven mij als rustig, overtuigend en communicatief sterk.',
       section: 'about', sectionLabel: 'Over mij',
-    };
-  }
-
-  // ── AMBITIE ─────────────────────────────────────────────
-  if (has('ambitie', 'droom', 'toekomst', 'volgende stap', 'groei', 'doorgroeien', 'wil worden')) {
-    return {
-      text: 'Ik wil doorgroeien naar projectleider — regisseur van verandering zijn tussen consultancy, productontwikkeling en klant.',
-      section: 'about', sectionLabel: 'Over mij',
-    };
-  }
-
-  // ── PROJECTLEIDER ───────────────────────────────────────
-  if (has('projectleid', 'projectmanag', 'projectrol', 'projectverantwoordelijk',
-          'leidinggeven', 'regisseur', 'projectbegeleiding', 'pl ')) {
-    return {
-      text: 'Ik maak de overstap al in de praktijk: complexe implementaties met fusies en meertalige teams, escalaties opgelost met relatie intact. Rustig, overtuigend, communicatief sterk.',
-      section: 'experience', sectionLabel: 'Mijn werkervaring',
     };
   }
 
