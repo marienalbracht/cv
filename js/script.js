@@ -1728,6 +1728,7 @@ function initSollicitatie() {
     if (!video) return;
 
     function startPlay() {
+      if (!introVideo.paused && !outroLoaded) return; // intro speelt nog → blokkeer
       pauseAllExcept(sat);
       sat.classList.add('playing');
       video.currentTime = 0;
