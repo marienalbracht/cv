@@ -45,7 +45,7 @@ const cvData = {
       type:    "Vast",
       summary: "In het team Overheid & Onderwijs van AFAS tientallen klanten geimplementeerd en bedrijfsprocessen geoptimaliseerd. Aanbestedingen met complexe projectstructuren en lange doorlooptijden.",
       details: [
-        "Projectbegeleiding bij organisaties van 1000+ FTE aanbestedingstrajecten",
+        "Projectbegeleiding bij organisaties van 1000+ FTE na aanbestedingstrajecten",
         "Software-implementatie AFAS HRM & Payroll van analyse- tot nazorgfase",
         "Werken in klein team van 2-4 consultants met volledige projectverantwoordelijkheid",
         "Bedrijfsprocessen geoptimaliseerd via AFAS-platform voor overheid en onderwijs",
@@ -193,7 +193,7 @@ const cvData = {
       category: "Implementatie & Projectmanagement",
       items: [
         { name: "Implementatietrajecten",      score: 5 },
-        { name: "Aanbestedingsprocessen",      score: 3 },
+        { name: "Projectmatig werken",         score: 3 },
         { name: "Projectleiding (2-4 pers.)",  score: 4 },
         { name: "Agile / Scrum",               score: 3 },
       ],
@@ -226,7 +226,7 @@ const cvData = {
       period:   "2024 - heden",
       client:   "Grote instellingen 1000+ FTE (AFAS Software)",
       icon:     "🏛️",
-      summary:  "Tientallen overheids- en onderwijsinstellingen begeleid bij complexe aanbestedingen en volledige AFAS-implementaties.",
+      summary:  "Tientallen overheids- en onderwijsinstellingen begeleid bij complexe en volledige AFAS-implementaties na aanbestedingstrajecten.",
       details:  "In het team Overheid & Onderwijs van AFAS verantwoordelijk voor de volledige projectbegeleiding van grote instellingen. Trajecten kenmerken zich door aanbestedingen met complexe juridische en technische eisen en lange doorlooptijden. In een klein team van 2-4 consultants verantwoordelijk van analyse- tot nazorgfase. Focus op procesoptimalisatie via AFAS HRM & Payroll.",
       tags:     ["AFAS", "Overheid", "Onderwijs", "Aanbesteding", "Implementatie", "HRM"],
       color:    "#00f5ff",
