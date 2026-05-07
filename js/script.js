@@ -1546,18 +1546,37 @@ function initSollicitatie() {
 
   const watchedVideos = new Set();
   let outroLoaded = false;
+  let outroPermVisible = false; // true als outro vast zichtbaar moet blijven (film 5 / alle 5 gezien)
 
-  /* ── Toon Samenvatting-poster + outro na volledig film ── */
-  function showSamenvatting() {
-    if (outroLoaded) return;
+  /* ── Toon Samenvatting-poster; optioneel outro permanent zichtbaar + autoplay ── */
+  function showSamenvatting(showOutro, autoPlay) {
+    if (outroLoaded) {
+      // Al actief: evt. alsnog outro tonen/afspelen
+      if (showOutro && outroWrap) {
+        outroWrap.hidden = false;
+        outroPermVisible = true;
+      }
+      if (autoPlay && outroVideo && outroVideo.paused) {
+        outroVideo.currentTime = 0;
+        outroVideo.play().catch(() => {});
+      }
+      return;
+    }
     outroLoaded = true;
     if (introVideo) introVideo.pause();
     if (centerPoster) centerPoster.hidden = false;
-    if (outroWrap)   outroWrap.hidden = false;
+    if (showOutro && outroWrap) {
+      outroWrap.hidden = false;
+      outroPermVisible = true;
+    }
+    if (autoPlay && outroVideo) {
+      outroVideo.currentTime = 0;
+      outroVideo.play().catch(() => {});
+    }
   }
 
   /* ── (Legacy stub) ── */
-  function switchToOutro() { showSamenvatting(); }
+  function switchToOutro() { showSamenvatting(true, true); }
 
   /* ── Reset alles terug naar intro-staat ── */
   function resetSpider() {
@@ -1568,6 +1587,7 @@ function initSollicitatie() {
     });
     watchedVideos.clear();
     outroLoaded = false;
+    outroPermVisible = false;
     if (centerPoster) { centerPoster.hidden = true; }
     if (outroWrap)  { outroWrap.hidden = true; }
     if (outroVideo) { outroVideo.pause(); outroVideo.currentTime = 0; }
@@ -1789,7 +1809,9 @@ function initSollicitatie() {
       sat.classList.remove('playing');
       sat.classList.add('watched');
       markWatched(sat);
-      showSamenvatting(); // toon Samenvatting-poster + outro na elk volledig film
+      // Film 5: outro permanent zichtbaar + autoplay; films 1-4: samenvatting zonder outro
+      const isFilm5 = +sat.dataset.num === 5;
+      showSamenvatting(isFilm5, isFilm5);
     });
 
     // Tel als 'gezien' na 0,5 seconden afspelen
@@ -1855,22 +1877,22 @@ function initSollicitatie() {
       return;
     }
 
-    if (!outroLoaded) showSamenvatting();
-    // Alle 5 gezien: autoplay outro
-    if (outroVideo && outroWrap && !outroWrap.hidden) {
+    if (!outroLoaded) showSamenvatting(true, false);
+    // Alle 5 gezien: outro permanent + autoplay
+    if (outroWrap) { outroWrap.hidden = false; outroPermVisible = true; }
+    if (outroVideo) {
       outroVideo.currentTime = 0;
       outroVideo.play().catch(() => {});
     }
   }
 
-  /* ── Center video: intro afgelopen → toon Samenvatting + outro ── */
+  /* ── Center video: intro afgelopen → toon Samenvatting (hover toont outro) ── */
   if (introVideo) {
     introVideo.addEventListener('ended', () => {
-      showSamenvatting();
+      showSamenvatting(false, false); // poster tonen, outro nog verborgen
       highlightNext(null);
     });
 
-    // Intro klikbaar: play/pause
     introVideo.addEventListener('click', () => {
       if (!outroLoaded) {
         if (introVideo.paused) introVideo.play().catch(() => {});
@@ -1879,18 +1901,20 @@ function initSollicitatie() {
     });
   }
 
-  // Outro hover → play; klik → play/pause
-  // Hover op Samenvatting-poster OF op outro-wrap start de outro
-  function startOutro() {
-    if (!outroLoaded || !outroVideo) return;
-    if (outroVideo.paused) {
+  // Samenvatting-poster hover → toon outro tijdelijk + speel af; mouseLeave → verberg weer
+  if (centerPoster) {
+    centerPoster.addEventListener('mouseenter', () => {
+      if (!outroLoaded || !outroWrap || !outroVideo) return;
+      outroWrap.hidden = false;
       outroVideo.currentTime = 0;
       outroVideo.play().catch(() => {});
-    }
-  }
-
-  if (centerPoster) {
-    centerPoster.addEventListener('mouseenter', startOutro);
+    });
+    centerPoster.addEventListener('mouseleave', () => {
+      if (!outroPermVisible && outroWrap) {
+        outroWrap.hidden = true;
+        if (outroVideo) outroVideo.pause();
+      }
+    });
     centerPoster.addEventListener('click', () => {
       if (!outroLoaded || !outroVideo) return;
       if (outroVideo.paused) outroVideo.play().catch(() => {});
@@ -1898,8 +1922,11 @@ function initSollicitatie() {
     });
   }
 
+  // Outro-bolletje hover/klik (als het al zichtbaar is)
   if (outroWrap && outroVideo) {
-    outroWrap.addEventListener('mouseenter', startOutro);
+    outroWrap.addEventListener('mouseenter', () => {
+      if (outroVideo.paused) { outroVideo.currentTime = 0; outroVideo.play().catch(() => {}); }
+    });
     outroWrap.addEventListener('click', () => {
       if (outroVideo.paused) outroVideo.play().catch(() => {});
       else outroVideo.pause();
