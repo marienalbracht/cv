@@ -1535,7 +1535,6 @@ function initSollicitatie() {
   const introVideo  = document.getElementById('spider-intro');
   const centerLabel = document.getElementById('spider-center-label');
   const centerPoster= document.getElementById('spider-center-poster');
-  const outroWrap   = document.getElementById('spider-outro-wrap');
   const outroVideo  = document.getElementById('spider-outro-video');
   const videoLink   = document.getElementById('soll-video-link');
   const spiderWrap  = document.getElementById('video-spider');
@@ -1552,8 +1551,9 @@ function initSollicitatie() {
   function showSamenvatting(showOutro, autoPlay) {
     if (outroLoaded) {
       // Al actief: evt. alsnog outro tonen/afspelen
-      if (showOutro && outroWrap) {
-        outroWrap.hidden = false;
+      if (showOutro && outroVideo) {
+        outroVideo.hidden = false;
+        if (centerPoster) centerPoster.hidden = true;
         outroPermVisible = true;
       }
       if (autoPlay && outroVideo && outroVideo.paused) {
@@ -1565,8 +1565,9 @@ function initSollicitatie() {
     outroLoaded = true;
     if (introVideo) introVideo.pause();
     if (centerPoster) centerPoster.hidden = false;
-    if (showOutro && outroWrap) {
-      outroWrap.hidden = false;
+    if (showOutro && outroVideo) {
+      outroVideo.hidden = false;
+      if (centerPoster) centerPoster.hidden = true;
       outroPermVisible = true;
     }
     if (autoPlay && outroVideo) {
@@ -1589,8 +1590,7 @@ function initSollicitatie() {
     outroLoaded = false;
     outroPermVisible = false;
     if (centerPoster) { centerPoster.hidden = true; }
-    if (outroWrap)  { outroWrap.hidden = true; }
-    if (outroVideo) { outroVideo.pause(); outroVideo.currentTime = 0; }
+    if (outroVideo) { outroVideo.pause(); outroVideo.currentTime = 0; outroVideo.hidden = true; }
     if (introVideo) {
       introVideo.pause();
       introVideo.src = 'assets/Intro.mp4';
@@ -1878,21 +1878,22 @@ function initSollicitatie() {
     }
 
     if (!outroLoaded) showSamenvatting(true, false);
-    // Alle 5 gezien: outro permanent + autoplay
-    if (outroWrap) { outroWrap.hidden = false; outroPermVisible = true; }
+    // Alle 5 gezien: outro permanent in center + autoplay
+    outroPermVisible = true;
     if (outroVideo) {
+      outroVideo.hidden = false;
+      if (centerPoster) centerPoster.hidden = true;
       outroVideo.currentTime = 0;
       outroVideo.play().catch(() => {});
     }
   }
 
-  /* ── Center video: intro afgelopen → toon Samenvatting (hover toont outro) ── */
+  /* ── Center video: intro afgelopen → toon Samenvatting (hover toont outro in zelfde cirkel) ── */
   if (introVideo) {
     introVideo.addEventListener('ended', () => {
       showSamenvatting(false, false); // poster tonen, outro nog verborgen
       highlightNext(null);
     });
-
     introVideo.addEventListener('click', () => {
       if (!outroLoaded) {
         if (introVideo.paused) introVideo.play().catch(() => {});
@@ -1901,33 +1902,25 @@ function initSollicitatie() {
     });
   }
 
-  // Samenvatting-poster hover → toon outro tijdelijk + speel af; mouseLeave → verberg weer
-  if (centerPoster) {
-    centerPoster.addEventListener('mouseenter', () => {
-      if (!outroLoaded || !outroWrap || !outroVideo) return;
-      outroWrap.hidden = false;
+  // Center hover → toon outro IN dezelfde cirkel; muis weg → samenvatting terug
+  const spiderCenterEl = document.querySelector('#video-spider .spider-center');
+  if (spiderCenterEl) {
+    spiderCenterEl.addEventListener('mouseenter', () => {
+      if (!outroLoaded || outroPermVisible || !outroVideo) return;
+      if (centerPoster) centerPoster.hidden = true;
+      outroVideo.hidden = false;
       outroVideo.currentTime = 0;
       outroVideo.play().catch(() => {});
     });
-    centerPoster.addEventListener('mouseleave', () => {
-      if (!outroPermVisible && outroWrap) {
-        outroWrap.hidden = true;
-        if (outroVideo) outroVideo.pause();
-      }
-    });
-    centerPoster.addEventListener('click', () => {
-      if (!outroLoaded || !outroVideo) return;
-      if (outroVideo.paused) outroVideo.play().catch(() => {});
-      else outroVideo.pause();
+    spiderCenterEl.addEventListener('mouseleave', () => {
+      if (!outroLoaded || outroPermVisible || !outroVideo) return;
+      outroVideo.pause();
+      outroVideo.hidden = true;
+      if (centerPoster) centerPoster.hidden = false;
     });
   }
-
-  // Outro-bolletje hover/klik (als het al zichtbaar is)
-  if (outroWrap && outroVideo) {
-    outroWrap.addEventListener('mouseenter', () => {
-      if (outroVideo.paused) { outroVideo.currentTime = 0; outroVideo.play().catch(() => {}); }
-    });
-    outroWrap.addEventListener('click', () => {
+  if (outroVideo) {
+    outroVideo.addEventListener('click', () => {
       if (outroVideo.paused) outroVideo.play().catch(() => {});
       else outroVideo.pause();
     });
