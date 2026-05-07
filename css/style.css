@@ -131,9 +131,6 @@ body.hero-active {
   color: white; background: rgba(255,255,255,.07);
   border-left-color: var(--color-orange);
 }
-.nav-link-sollicitatie {
-  color: var(--color-orange) !important;
-}
 .nav-link-sollicitatie:hover {
   background: rgba(245,159,57,.12) !important;
   border-left-color: var(--color-orange) !important;
@@ -365,9 +362,9 @@ body.hero-active {
 -------------------------------------------------------- */
 .hero {
   position: relative;
-  height: 100vh; max-height: 100vh;
+  min-height: 100vh;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 1.5rem 2rem 3rem; overflow: hidden;
+  padding: 1.5rem 2rem 3rem; overflow: visible;
   background: url('../assets/Achtergrond.jpg') center center / cover no-repeat;
   box-sizing: border-box;
 }
