@@ -1631,7 +1631,12 @@ function initSollicitatie() {
         const vs = document.getElementById('soll-video-section');
         if (vs) vs.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(drawLines, 400);
-      }, 300);
+        // Start intro direct — wacht niet op IntersectionObserver
+        if (introVideo) {
+          introVideo.currentTime = 0;
+          introVideo.play().catch(() => {});
+        }
+      }, 350);
       history.replaceState(null, '', '#visie');
     } else {
       stage.scrollTop = 0;
