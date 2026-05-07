@@ -1513,22 +1513,6 @@ body.hero-active {
   justify-content: center;
 }
 
-/* Topbar met knop + eyebrow */
-.soll-video-topbar {
-  display: flex; align-items: center; justify-content: center;
-  gap: 1.2rem; width: 100%;
-  flex-wrap: wrap;
-}
-.soll-to-letter-btn {
-  display: inline-flex; align-items: center; gap: .4rem;
-  background: rgba(255,255,255,.1); color: rgba(255,255,255,.8);
-  border: 1px solid rgba(255,255,255,.2); border-radius: var(--r-full);
-  padding: .45rem 1.1rem; font-size: .82rem; font-weight: 600;
-  font-family: var(--font-body); cursor: pointer;
-  transition: background var(--t-fast), color var(--t-fast);
-  white-space: nowrap;
-}
-.soll-to-letter-btn:hover { background: rgba(255,255,255,.18); color: white; }
 
 /* Eyebrow + titel */
 .soll-eyebrow {
