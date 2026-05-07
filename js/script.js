@@ -1523,6 +1523,42 @@ function initSollicitatie() {
   const watchedVideos = new Set();
   let outroLoaded = false;
 
+  /* ── Wissel center-video naar outro ── */
+  function switchToOutro() {
+    if (outroLoaded || !introVideo) return;
+    outroLoaded = true;
+    introVideo.pause();
+    introVideo.src = 'assets/Outro.mov';
+    introVideo.classList.add('outro-active');
+    introVideo.load();
+    if (centerLabel) { centerLabel.textContent = 'Outro'; centerLabel.style.color = 'var(--color-green)'; }
+  }
+
+  /* ── Reset alles terug naar intro-staat ── */
+  function resetSpider() {
+    sats.forEach(s => {
+      const v = s.querySelector('.spider-video');
+      if (v) { v.pause(); v.currentTime = 0; }
+      s.classList.remove('playing', 'watched');
+    });
+    watchedVideos.clear();
+    outroLoaded = false;
+    if (introVideo) {
+      introVideo.pause();
+      introVideo.src = 'assets/Intro.mov';
+      introVideo.classList.remove('outro-active');
+      introVideo.load();
+    }
+    if (centerLabel) { centerLabel.textContent = 'Intro'; centerLabel.style.color = ''; }
+    if (svgLines) {
+      svgLines.querySelectorAll('.spider-line').forEach(l => {
+        l.classList.remove('active');
+        l.style.stroke = '';
+        l.style.strokeDasharray = '';
+      });
+    }
+  }
+
   /* ── SVG verbindingslijnen tekenen ── */
   function drawLines() {
     if (!svgLines || !spiderWrap) return;
@@ -1548,8 +1584,8 @@ function initSollicitatie() {
 
   /* ── Eén video tegelijk ── */
   function pauseAllExcept(keepSat) {
-    // Pauzeer intro/outro wanneer een satelliet start
-    if (keepSat && introVideo && !introVideo.paused) introVideo.pause();
+    // Wissel direct naar outro zodra een satelliet start
+    if (keepSat) switchToOutro();
 
     sats.forEach(sat => {
       if (sat === keepSat) return;
@@ -1581,9 +1617,8 @@ function initSollicitatie() {
   function closeStage() {
     stage.classList.remove('active');
     document.body.style.overflow = '';
-    stage.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
-    sats.forEach(s => s.classList.remove('playing'));
-    if (svgLines) svgLines.querySelectorAll('.spider-line').forEach(l => l.classList.remove('active'));
+    resetSpider();
+    if (svgLines) svgLines.innerHTML = '';
     stage.addEventListener('transitionend', () => {
       if (!stage.classList.contains('active')) stage.hidden = true;
     }, { once: true });
@@ -1601,11 +1636,12 @@ function initSollicitatie() {
           introVideo.currentTime = 0;
           introVideo.play().catch(() => {});
           setTimeout(drawLines, 80);
-        } else {
-          introVideo.pause();
+        } else if (!entry.isIntersecting && stage.classList.contains('active')) {
+          // Uit beeld: reset spider naar beginstaat
+          resetSpider();
         }
       });
-    }, { threshold: 0.4 });
+    }, { threshold: 0.25 });
     videoObserver.observe(videoSection);
   }
   document.addEventListener('keydown', e => {
@@ -1661,21 +1697,11 @@ function initSollicitatie() {
     });
   });
 
-  /* ── Alle 5 gezien → wissel naar Outro ── */
+  /* ── Alle 5 gezien → speel outro af ── */
   function checkAllWatched() {
-    if (watchedVideos.size < 5 || outroLoaded) return;
-    outroLoaded = true;
-    if (introVideo) {
-      introVideo.pause();
-      introVideo.src = 'assets/Outro.mov';
-      introVideo.classList.add('outro-active');
-      introVideo.load();
-      introVideo.play().catch(() => {});
-      if (centerLabel) {
-        centerLabel.textContent = 'Outro';
-        centerLabel.style.color = 'var(--color-green)';
-      }
-    }
+    if (watchedVideos.size < 5) return;
+    // Outro is al geladen bij eerste hover; speel nu af
+    if (introVideo) introVideo.play().catch(() => {});
   }
 
   /* ── Center video klikbaar ── */
