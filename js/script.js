@@ -1394,8 +1394,8 @@ function matchQuestion(q) {
   if (has('projectleid', 'projectmanag', 'projectrol', 'projectverantwoordelijk',
           'leidinggeven', 'regisseur', 'pl-rol')) {
     return {
-      text: 'Marien heeft ruime ervaring met projectleiding: bij AFAS stuurt hij implementatietrajecten aan in een team van 2–4 consultants (analyse t/m nazorg, 1000+ FTE organisaties). Bij KerkSterk was hij mede-eigenaar én projectleider van adviestrajecten. Bij Heroes of Work was hij Operational Manager en Product Owner in een Agile-team.',
-      section: 'experience', sectionLabel: 'Mijn werkervaring',
+      text: 'Marien heeft ruime ervaring met projectleiding: bij AFAS stuurt hij implementatietrajecten aan in een team van 2–4 consultants (analyse t/m nazorg, 1000+ FTE organisaties). Bij KerkSterk was hij mede-eigenaar én projectleider van adviestrajecten. Bij Heroes of Work was hij Operational Manager en Product Owner in een Agile-team. In mijn sollicitatie lees je meer over mijn ambitie als projectleider!',
+      openSollicitatie: true,
     };
   }
 
