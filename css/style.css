@@ -1562,9 +1562,28 @@ body.hero-active {
 -------------------------------------------------------- */
 .video-spider {
   position: relative;
-  width: clamp(320px, 70vw, 680px);
-  height: clamp(320px, 70vw, 680px);
+  width: clamp(340px, 72vw, 700px);
+  height: clamp(340px, 72vw, 700px);
   flex-shrink: 0;
+}
+
+/* SVG lijnen */
+.spider-lines {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+  overflow: visible;
+}
+.spider-line {
+  stroke: rgba(245,159,57,.25);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+  transition: stroke var(--t-med), stroke-opacity var(--t-med);
+}
+.spider-line.active {
+  stroke: var(--color-orange);
+  stroke-dasharray: none;
+  stroke-opacity: .9;
 }
 
 /* Center video */
@@ -1573,21 +1592,21 @@ body.hero-active {
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: center; gap: .5rem;
-  z-index: 2;
+  z-index: 3;
 }
 .spider-video--center {
-  width: clamp(140px, 22vw, 200px);
-  height: clamp(140px, 22vw, 200px);
+  width: clamp(140px, 22vw, 210px);
+  height: clamp(140px, 22vw, 210px);
   border-radius: 50%; object-fit: cover;
   border: 4px solid var(--color-orange);
   box-shadow: 0 0 0 8px rgba(245,159,57,.15), 0 8px 40px rgba(0,0,0,.6);
   cursor: pointer;
-  transition: box-shadow var(--t-med);
+  transition: box-shadow var(--t-med), border-color var(--t-med);
   background: #000;
 }
 .spider-video--center.outro-active {
   border-color: var(--color-green);
-  box-shadow: 0 0 0 8px rgba(60,198,88,.2), 0 8px 40px rgba(60,198,88,.25);
+  box-shadow: 0 0 0 8px rgba(60,198,88,.2), 0 8px 40px rgba(60,198,88,.35);
 }
 .spider-center-label {
   font-size: .72rem; font-weight: 700; letter-spacing: .12em;
@@ -1595,60 +1614,123 @@ body.hero-active {
   font-family: var(--font-heading);
 }
 
-/* Satelliet videos */
+/* Satelliet wrapper */
 .spider-sat {
   position: absolute;
   top: 50%; left: 50%;
-  /* Berekening: --radius = helft van container, --sat-size = satelliet breedte/2 */
-  --radius: calc(clamp(320px, 70vw, 680px) * .38);
-  --sat-size: clamp(80px, 12vw, 120px);
+  --radius: calc(clamp(340px, 72vw, 700px) * .375);
+  --sat-size: clamp(88px, 13vw, 128px);
   transform:
     translate(-50%, -50%)
     rotate(var(--angle))
     translateX(var(--radius))
     rotate(calc(-1 * var(--angle)));
   width: var(--sat-size);
-  display: flex; flex-direction: column; align-items: center; gap: .4rem;
-  cursor: pointer; z-index: 1;
-  transition: transform var(--t-med);
+  display: flex; flex-direction: column; align-items: center; gap: .45rem;
+  cursor: pointer; z-index: 2;
+  transition: z-index 0s;
 }
-.spider-sat:hover {
-  /* Behoud positie maar schaal iets op — via wrapper scale */
-  filter: drop-shadow(0 0 16px rgba(245,159,57,.7));
-}
-.spider-sat .spider-video {
+
+/* Inner wrapper — hier schalen we op bij playing */
+.spider-sat-inner {
+  position: relative;
   width: var(--sat-size);
   height: var(--sat-size);
-  border-radius: 50%; object-fit: cover;
-  border: 3px solid rgba(255,255,255,.25);
-  background: #111;
-  transition: border-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1), filter .25s ease;
+  border-radius: 50%;
 }
-.spider-sat:hover .spider-video {
+.spider-sat:hover .spider-sat-inner {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 14px rgba(245,159,57,.65));
+}
+.spider-sat.playing .spider-sat-inner {
+  transform: scale(1.35);
+  filter: drop-shadow(0 0 22px rgba(245,159,57,.9));
+  z-index: 10;
+}
+.spider-sat.playing { z-index: 10; }
+
+/* Video cirkel */
+.spider-sat .spider-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border-radius: 50%; object-fit: cover;
+  border: 3px solid rgba(255,255,255,.2);
+  background: #111;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.spider-sat:hover .spider-video,
+.spider-sat.playing .spider-video {
   border-color: var(--color-orange);
-  box-shadow: 0 0 0 5px rgba(245,159,57,.2);
-  transform: scale(1.1);
+  box-shadow: 0 0 0 4px rgba(245,159,57,.25);
 }
 .spider-sat.watched .spider-video {
   border-color: var(--color-green);
-  box-shadow: 0 0 0 5px rgba(60,198,88,.2);
+  box-shadow: 0 0 0 4px rgba(60,198,88,.25);
 }
-.spider-sat-label {
-  font-size: clamp(.6rem, 1.5vw, .75rem); font-weight: 700;
-  letter-spacing: .08em; text-transform: uppercase;
-  color: rgba(255,255,255,.6); font-family: var(--font-heading);
-  transition: color var(--t-fast);
-  white-space: nowrap;
-}
-.spider-sat:hover .spider-sat-label { color: var(--color-orange); }
-.spider-sat.watched .spider-sat-label { color: var(--color-green); }
 
-/* Verbindingslijnen (SVG achtergrond) */
+/* Poster overlay */
+.spider-sat-poster {
+  position: absolute; inset: 0;
+  border-radius: 50%; overflow: hidden;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  opacity: 1;
+}
+.spider-sat-poster img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  border-radius: 50%;
+}
+.spider-sat-poster-text {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: rgba(0,20,50,.55);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: .15rem;
+  font-family: 'Roboto', var(--font-heading), sans-serif;
+}
+.spider-sat-num {
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-weight: 900; color: var(--color-orange);
+  line-height: 1; font-family: 'Roboto', sans-serif;
+}
+.spider-sat-name {
+  font-size: clamp(.52rem, 1.2vw, .7rem);
+  font-weight: 700; color: white;
+  text-transform: uppercase; letter-spacing: .08em;
+  font-family: 'Roboto', sans-serif;
+  text-align: center; padding: 0 .3rem;
+}
+/* Poster verdwijnt bij hover en playing */
+.spider-sat:hover .spider-sat-poster,
+.spider-sat.playing .spider-sat-poster {
+  opacity: 0;
+}
+
+/* Label onder de cirkel */
+.spider-sat-label {
+  font-size: clamp(.58rem, 1.4vw, .72rem); font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(255,255,255,.55); font-family: var(--font-heading);
+  transition: color var(--t-fast);
+  white-space: nowrap; display: flex; align-items: center; gap: .25rem;
+}
+.spider-sat-label-num {
+  color: var(--color-orange); font-size: .9em;
+}
+.spider-sat:hover .spider-sat-label,
+.spider-sat.playing .spider-sat-label { color: var(--color-orange); }
+.spider-sat.watched .spider-sat-label { color: var(--color-green); }
+.spider-sat.watched .spider-sat-label .spider-sat-label-num { color: var(--color-green); }
+
+/* Circulaire achtergrondlijn */
 .video-spider::before {
   content: '';
   position: absolute; inset: 0; border-radius: 50%;
-  border: 1px dashed rgba(255,255,255,.08);
-  pointer-events: none;
+  border: 1px dashed rgba(255,255,255,.06);
+  pointer-events: none; z-index: 0;
 }
 
 .spider-hint {

@@ -1514,6 +1514,8 @@ function initSollicitatie() {
   const introVideo = document.getElementById('spider-intro');
   const centerLabel= document.getElementById('spider-center-label');
   const videoLink  = document.getElementById('soll-video-link');
+  const spiderWrap = document.getElementById('video-spider');
+  const svgLines   = document.getElementById('spider-lines');
   const sats       = Array.from(document.querySelectorAll('.spider-sat'));
 
   if (!stage || !trigger) return;
@@ -1521,29 +1523,64 @@ function initSollicitatie() {
   const watchedVideos = new Set();
   let outroLoaded = false;
 
+  /* ── SVG verbindingslijnen tekenen ── */
+  function drawLines() {
+    if (!svgLines || !spiderWrap) return;
+    svgLines.innerHTML = '';
+
+    const wRect  = spiderWrap.getBoundingClientRect();
+    const cx     = wRect.width / 2;
+    const cy     = wRect.height / 2;
+
+    sats.forEach((sat, i) => {
+      const sRect  = sat.getBoundingClientRect();
+      const sx     = sRect.left - wRect.left + sRect.width / 2;
+      const sy     = sRect.top  - wRect.top  + sRect.height / 2;
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+      line.setAttribute('x2', sx); line.setAttribute('y2', sy);
+      line.classList.add('spider-line');
+      line.dataset.lineIdx = i;
+      svgLines.appendChild(line);
+    });
+  }
+
+  /* ── Eén video tegelijk ── */
+  function pauseAllExcept(keepSat) {
+    sats.forEach(sat => {
+      if (sat === keepSat) return;
+      const v = sat.querySelector('.spider-video');
+      if (v && !v.paused) v.pause();
+      sat.classList.remove('playing');
+    });
+    // Update SVG lijnen
+    if (svgLines) {
+      svgLines.querySelectorAll('.spider-line').forEach((l, i) => {
+        const sat = sats[i];
+        l.classList.toggle('active', sat === keepSat);
+      });
+    }
+  }
+
   /* ── Open overlay ── */
   function openStage() {
     stage.hidden = false;
-    // kleine vertraging zodat hidden→display transition werkt
-    requestAnimationFrame(() => {
-      stage.classList.add('active');
-    });
+    requestAnimationFrame(() => { stage.classList.add('active'); });
     document.body.style.overflow = 'hidden';
     stage.scrollTop = 0;
-    // Start intro
-    if (introVideo) {
-      introVideo.currentTime = 0;
-      introVideo.play().catch(() => {});
-    }
+    // SVG lijnen tekenen na render
+    setTimeout(drawLines, 120);
+    if (introVideo) { introVideo.currentTime = 0; introVideo.play().catch(() => {}); }
   }
 
   /* ── Sluit overlay ── */
   function closeStage() {
     stage.classList.remove('active');
     document.body.style.overflow = '';
-    // Pauzeer alle videos
     stage.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
-    // Verwijder hidden na transitie
+    sats.forEach(s => s.classList.remove('playing'));
+    if (svgLines) svgLines.querySelectorAll('.spider-line').forEach(l => l.classList.remove('active'));
     stage.addEventListener('transitionend', () => {
       if (!stage.classList.contains('active')) stage.hidden = true;
     }, { once: true });
@@ -1551,11 +1588,10 @@ function initSollicitatie() {
 
   trigger.addEventListener('click', openStage);
   backBtn.addEventListener('click', closeStage);
-
-  // Sluit ook via Escape
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && stage.classList.contains('active')) closeStage();
   });
+  window.addEventListener('resize', drawLines);
 
   /* ── Scroll naar video paneel ── */
   if (videoLink) {
@@ -1563,30 +1599,43 @@ function initSollicitatie() {
       e.preventDefault();
       document.getElementById('soll-video-section')
         .scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(drawLines, 600);
     });
   }
 
-  /* ── Satelliet hover: play/pause ── */
+  /* ── Satelliet hover: play/pause + één tegelijk ── */
   sats.forEach(sat => {
     const video = sat.querySelector('.spider-video');
     if (!video) return;
 
-    sat.addEventListener('mouseenter', () => {
+    function startPlay() {
+      pauseAllExcept(sat);
+      sat.classList.add('playing');
       video.play().catch(() => {});
-    });
-    sat.addEventListener('mouseleave', () => {
-      if (!video.ended) video.pause();
-    });
-    // Touch: tap om te togglen
+    }
+    function stopPlay() {
+      if (!video.ended) { video.pause(); sat.classList.remove('playing'); }
+      pauseAllExcept(null); // lijn uitschakelen
+    }
+
+    sat.addEventListener('mouseenter', startPlay);
+    sat.addEventListener('mouseleave', stopPlay);
     sat.addEventListener('click', () => {
-      if (video.paused) video.play().catch(() => {});
-      else video.pause();
+      if (video.paused) startPlay(); else stopPlay();
     });
 
-    /* Bijhouden welke gezien zijn */
     video.addEventListener('ended', () => {
+      sat.classList.remove('playing');
       sat.classList.add('watched');
       watchedVideos.add(sat.dataset.sat);
+      if (svgLines) {
+        const line = svgLines.querySelector(`[data-line-idx="${sats.indexOf(sat)}"]`);
+        if (line) {
+          line.classList.remove('active');
+          line.style.stroke = 'rgba(60,198,88,.4)';
+          line.style.strokeDasharray = 'none';
+        }
+      }
       checkAllWatched();
     });
   });
@@ -1595,8 +1644,6 @@ function initSollicitatie() {
   function checkAllWatched() {
     if (watchedVideos.size < 5 || outroLoaded) return;
     outroLoaded = true;
-
-    // Swap center video naar Outro
     if (introVideo) {
       introVideo.pause();
       introVideo.src = 'assets/Outro.mov';

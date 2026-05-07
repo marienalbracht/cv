@@ -154,6 +154,12 @@
         <h2 class="soll-title soll-title--video">In 5 thema's</h2>
 
         <div class="video-spider" id="video-spider">
+
+          <!-- SVG verbindingslijnen (spider web) -->
+          <svg class="spider-lines" id="spider-lines" aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg" overflow="visible">
+          </svg>
+
           <!-- Center: Intro (wordt Outro na alle 5) -->
           <div class="spider-center">
             <video class="spider-video spider-video--center" id="spider-intro"
@@ -163,29 +169,78 @@
           </div>
 
           <!-- Satelliet 1 — Regisseur -->
-          <div class="spider-sat" data-sat="0" style="--angle:0deg" aria-label="Regisseur">
-            <video class="spider-video" src="assets/Film 1.mov" playsinline preload="metadata"></video>
-            <div class="spider-sat-label">Regisseur</div>
+          <div class="spider-sat" data-sat="0" data-num="1" style="--angle:0deg" aria-label="Regisseur">
+            <div class="spider-sat-inner">
+              <video class="spider-video" src="assets/Film 1.mov" playsinline preload="metadata"></video>
+              <div class="spider-sat-poster">
+                <img src="assets/Achtergrond.jpg" alt="" aria-hidden="true">
+                <div class="spider-sat-poster-text">
+                  <span class="spider-sat-num">1</span>
+                  <span class="spider-sat-name">Regisseur</span>
+                </div>
+              </div>
+            </div>
+            <div class="spider-sat-label"><span class="spider-sat-label-num">1</span> Regisseur</div>
           </div>
+
           <!-- Satelliet 2 — Flair -->
-          <div class="spider-sat" data-sat="1" style="--angle:72deg" aria-label="Flair">
-            <video class="spider-video" src="assets/Film 2.mov" playsinline preload="metadata"></video>
-            <div class="spider-sat-label">Flair</div>
+          <div class="spider-sat" data-sat="1" data-num="2" style="--angle:72deg" aria-label="Flair">
+            <div class="spider-sat-inner">
+              <video class="spider-video" src="assets/Film 2.mov" playsinline preload="metadata"></video>
+              <div class="spider-sat-poster">
+                <img src="assets/Achtergrond.jpg" alt="" aria-hidden="true">
+                <div class="spider-sat-poster-text">
+                  <span class="spider-sat-num">2</span>
+                  <span class="spider-sat-name">Flair</span>
+                </div>
+              </div>
+            </div>
+            <div class="spider-sat-label"><span class="spider-sat-label-num">2</span> Flair</div>
           </div>
+
           <!-- Satelliet 3 — Toegankelijk -->
-          <div class="spider-sat" data-sat="2" style="--angle:144deg" aria-label="Toegankelijk">
-            <video class="spider-video" src="assets/Film 3.mov" playsinline preload="metadata"></video>
-            <div class="spider-sat-label">Toegankelijk</div>
+          <div class="spider-sat" data-sat="2" data-num="3" style="--angle:144deg" aria-label="Toegankelijk">
+            <div class="spider-sat-inner">
+              <video class="spider-video" src="assets/Film 3.mov" playsinline preload="metadata"></video>
+              <div class="spider-sat-poster">
+                <img src="assets/Achtergrond.jpg" alt="" aria-hidden="true">
+                <div class="spider-sat-poster-text">
+                  <span class="spider-sat-num">3</span>
+                  <span class="spider-sat-name">Toegankelijk</span>
+                </div>
+              </div>
+            </div>
+            <div class="spider-sat-label"><span class="spider-sat-label-num">3</span> Toegankelijk</div>
           </div>
+
           <!-- Satelliet 4 — Autoriteit -->
-          <div class="spider-sat" data-sat="3" style="--angle:216deg" aria-label="Autoriteit">
-            <video class="spider-video" src="assets/Film 4.mov" playsinline preload="metadata"></video>
-            <div class="spider-sat-label">Autoriteit</div>
+          <div class="spider-sat" data-sat="3" data-num="4" style="--angle:216deg" aria-label="Autoriteit">
+            <div class="spider-sat-inner">
+              <video class="spider-video" src="assets/Film 4.mov" playsinline preload="metadata"></video>
+              <div class="spider-sat-poster">
+                <img src="assets/Achtergrond.jpg" alt="" aria-hidden="true">
+                <div class="spider-sat-poster-text">
+                  <span class="spider-sat-num">4</span>
+                  <span class="spider-sat-name">Autoriteit</span>
+                </div>
+              </div>
+            </div>
+            <div class="spider-sat-label"><span class="spider-sat-label-num">4</span> Autoriteit</div>
           </div>
+
           <!-- Satelliet 5 — Innovatief -->
-          <div class="spider-sat" data-sat="4" style="--angle:288deg" aria-label="Innovatief">
-            <video class="spider-video" src="assets/Film 5.mov" playsinline preload="metadata"></video>
-            <div class="spider-sat-label">Innovatief</div>
+          <div class="spider-sat" data-sat="4" data-num="5" style="--angle:288deg" aria-label="Innovatief">
+            <div class="spider-sat-inner">
+              <video class="spider-video" src="assets/Film 5.mov" playsinline preload="metadata"></video>
+              <div class="spider-sat-poster">
+                <img src="assets/Achtergrond.jpg" alt="" aria-hidden="true">
+                <div class="spider-sat-poster-text">
+                  <span class="spider-sat-num">5</span>
+                  <span class="spider-sat-name">Innovatief</span>
+                </div>
+              </div>
+            </div>
+            <div class="spider-sat-label"><span class="spider-sat-label-num">5</span> Innovatief</div>
           </div>
         </div>
 
