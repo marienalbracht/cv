@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initAskMarien();
   initSollicitatie();
 
+  // Sollicitatie shortcuts op alle secties
+  document.querySelectorAll('.soll-shortcut').forEach(btn => {
+    btn.addEventListener('click', () => {
+      location.hash = '#sollicitatie';
+    });
+  });
+
   // Footer year
   const fyEl = document.getElementById('footer-year');
   if (fyEl) fyEl.textContent = new Date().getFullYear();

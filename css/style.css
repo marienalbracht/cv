@@ -309,6 +309,32 @@ body.hero-active {
 /* --------------------------------------------------------
    SECTIE-NAVIGATIE: "Naar [volgende]"
 -------------------------------------------------------- */
+
+/* Sollicitatie shortcut — subtiel rechtsboven in elke sectie */
+.soll-shortcut {
+  position: absolute; top: 1.1rem; right: 1.5rem;
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--color-muted);
+  font-family: var(--font-heading); text-decoration: none;
+  cursor: pointer; background: none; border: none; padding: 0;
+  transition: color var(--t-fast);
+  z-index: 2;
+}
+.soll-shortcut-arrow {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-right: 2px solid currentColor;
+  border-top: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--t-fast);
+  flex-shrink: 0;
+}
+.soll-shortcut:hover { color: var(--color-orange); }
+.soll-shortcut:hover .soll-shortcut-arrow {
+  transform: rotate(45deg) translate(2px, -2px);
+}
+
 .section-next {
   display: flex; flex-direction: column; align-items: center; gap: .45rem;
   text-decoration: none; cursor: pointer;
