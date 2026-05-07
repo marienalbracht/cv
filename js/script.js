@@ -1592,8 +1592,11 @@ function initSollicitatie() {
 
   /* ── Eén video tegelijk ── */
   function pauseAllExcept(keepSat) {
-    // Wissel direct naar outro zodra een satelliet start
-    if (keepSat) switchToOutro();
+    // Stop intro/outro bij starten satelliet
+    if (keepSat) {
+      switchToOutro();
+      if (introVideo && !introVideo.paused) introVideo.pause();
+    }
 
     sats.forEach(sat => {
       if (sat === keepSat) return;
@@ -1706,7 +1709,7 @@ function initSollicitatie() {
     // Tel als 'gezien' na 3 seconden afspelen
     const satKey = sat.dataset.sat;
     video.addEventListener('timeupdate', function onTime() {
-      if (video.currentTime >= 3) {
+      if (video.currentTime >= 1) {
         video.removeEventListener('timeupdate', onTime);
         markWatched(sat);
       }
