@@ -1663,7 +1663,21 @@ function initSollicitatie() {
     stage.classList.remove('active');
     document.body.style.overflow = '';
     history.replaceState(null, '', '#');
-    // Laat de IntersectionObserver de navbar-zichtbaarheid bepalen (geen flash)
+    // Herstel navbar op basis van huidige scroll-positie (IntersectionObserver triggert niet opnieuw)
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+      const hero = document.getElementById('home');
+      const dash = document.getElementById('dashboard');
+      const vp   = window.innerHeight;
+      function nowVisible(el) {
+        if (!el) return false;
+        const r = el.getBoundingClientRect();
+        return r.bottom > vp * 0.15 && r.top < vp * 0.85;
+      }
+      const hide = nowVisible(hero) || nowVisible(dash);
+      navbar.classList.toggle('nav-hidden', hide);
+      document.body.classList.toggle('hero-active', hide);
+    }
     resetSpider();
     if (svgLines) svgLines.innerHTML = '';
     stage.addEventListener('transitionend', () => {
