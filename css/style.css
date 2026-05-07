@@ -286,8 +286,13 @@ body.hero-active {
   box-shadow: 0 8px 26px rgba(245,159,57,.55);
 }
 .scroll-indicator-arrow {
-  font-size: 1.1rem; line-height: 1;
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-right: 2.5px solid white;
+  border-bottom: 2.5px solid white;
+  transform: rotate(45deg) translateY(-3px);
   animation: scrollBounce 1.4s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 /* --------------------------------------------------------
