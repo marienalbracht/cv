@@ -1719,9 +1719,7 @@ body.hero-active {
   text-transform: uppercase; letter-spacing: .1em;
   text-align: center;
 }
-/* Poster verdwijnt bij hover op de poster zelf → outro start */
-.spider-center-poster:hover { opacity: 0; }
-.spider-center:hover .spider-center-poster { opacity: 0; }
+/* Poster verdwijnt NIET bij hover — blijft als Samenvatting-indicator */
 .spider-video--center {
   width: clamp(140px, 20vw, 200px);
   height: clamp(140px, 20vw, 200px);
@@ -1738,6 +1736,29 @@ body.hero-active {
 }
 .spider-center-label {
   display: none;
+}
+
+/* Outro wrap — verschijnt onder center na eerste film */
+.spider-outro-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: .3rem;
+  cursor: pointer; margin-top: .2rem;
+}
+.spider-outro-wrap[hidden] { display: none; }
+.spider-outro-video {
+  width: clamp(68px, 9vw, 96px);
+  height: clamp(68px, 9vw, 96px);
+  border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--color-green);
+  box-shadow: 0 0 0 5px rgba(60,198,88,.15);
+  background: #000;
+  transition: box-shadow var(--t-med), border-color var(--t-med);
+}
+.spider-outro-wrap:hover .spider-outro-video {
+  box-shadow: 0 0 0 8px rgba(60,198,88,.3), 0 4px 20px rgba(60,198,88,.45);
+}
+.spider-outro-label {
+  font-size: .65rem; font-weight: 700;
+  color: var(--color-green); text-transform: uppercase; letter-spacing: .09em;
 }
 
 /* Satelliet wrapper */

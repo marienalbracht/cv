@@ -164,7 +164,7 @@
                xmlns="http://www.w3.org/2000/svg" overflow="visible">
           </svg>
 
-          <!-- Center: Intro (wordt Outro na alle 5) -->
+          <!-- Center: Intro (toont Samenvatting-poster na elk film) -->
           <div class="spider-center">
             <video class="spider-video spider-video--center" id="spider-intro"
                    src="assets/Intro.mp4" playsinline preload="metadata"
@@ -176,6 +176,13 @@
               </div>
             </div>
             <div class="spider-center-label" id="spider-center-label">Intro</div>
+            <!-- Outro: verschijnt nadat eerste film klaar is -->
+            <div class="spider-outro-wrap" id="spider-outro-wrap" hidden>
+              <video class="spider-outro-video" id="spider-outro-video"
+                     src="assets/Outro.mp4" playsinline preload="metadata"
+                     disablepictureinpicture aria-label="Outro"></video>
+              <div class="spider-outro-label">Outro</div>
+            </div>
           </div>
 
           <!-- Satelliet 1 — Regisseur -->
