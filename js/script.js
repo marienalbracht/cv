@@ -1746,9 +1746,10 @@ function initSollicitatie() {
     }
   }
 
-  /* ── Center video: hover op poster start outro, klik toggle ── */
+  /* ── Center video: hover op poster start outro, verlaat = pauze ── */
   if (introVideo) {
-    // Hover op de Samenvatting-poster → outro direct afspelen
+    const spiderCenter = document.querySelector('.spider-center');
+
     if (centerPoster) {
       centerPoster.addEventListener('mouseenter', () => {
         if (outroLoaded) {
@@ -1757,6 +1758,17 @@ function initSollicitatie() {
         }
       });
     }
+
+    // Muis verlaat het hele center-gebied → pauze
+    if (spiderCenter) {
+      spiderCenter.addEventListener('mouseleave', () => {
+        if (outroLoaded && !introVideo.paused) {
+          introVideo.pause();
+          introVideo.currentTime = 0;
+        }
+      });
+    }
+
     introVideo.addEventListener('click', () => {
       if (introVideo.paused) introVideo.play().catch(() => {});
       else introVideo.pause();
