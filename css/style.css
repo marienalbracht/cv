@@ -1199,8 +1199,12 @@ body.hero-active {
 .reference-card.revealed .reference-reveal-label { opacity: 0; pointer-events: none; }
 .reference-name    { font-size: 1rem; font-weight: 700; color: var(--color-dark); margin-bottom: .22rem; font-family: var(--font-heading); }
 .reference-role    { font-size: .84rem; color: var(--color-blue); font-weight: 600; margin-bottom: .1rem; }
-.reference-company { font-size: .81rem; color: var(--color-text); margin-bottom: .1rem; }
+.reference-company { font-size: .81rem; color: var(--color-text); margin-bottom: .25rem; }
 .reference-relation{ font-size: .76rem; color: var(--color-muted); font-style: italic; }
+.reference-phone   { font-size: .82rem; color: var(--color-text); margin-top: .45rem; }
+.reference-email   { font-size: .82rem; margin-top: .18rem; }
+.reference-email a { color: var(--color-blue2); text-decoration: underline; }
+.reference-email a:hover { color: var(--color-blue); }
 
 /* --------------------------------------------------------
    CONTACT

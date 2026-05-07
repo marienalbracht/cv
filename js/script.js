@@ -894,9 +894,10 @@ function buildReferences() {
       </div>
       <div class="reference-blur">
         <div class="reference-name">${escHtml(ref.name)}</div>
-        <div class="reference-role">${escHtml(ref.role)}</div>
         <div class="reference-company">${escHtml(ref.company)}</div>
-        <div class="reference-relation">${escHtml(ref.relation)}</div>
+        <div class="reference-role">(${escHtml(ref.role)})</div>
+        ${ref.phone ? `<div class="reference-phone">📞 ${escHtml(ref.phone)}</div>` : ''}
+        ${ref.email ? `<div class="reference-email"><a href="mailto:${escHtml(ref.email)}" onclick="event.stopPropagation()">${escHtml(ref.email)}</a></div>` : ''}
       </div>
     </div>
   `).join('');
