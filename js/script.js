@@ -1880,13 +1880,26 @@ function initSollicitatie() {
   }
 
   // Outro hover → play; klik → play/pause
-  if (outroWrap && outroVideo) {
-    outroWrap.addEventListener('mouseenter', () => {
-      if (outroVideo.paused) {
-        outroVideo.currentTime = 0;
-        outroVideo.play().catch(() => {});
-      }
+  // Hover op Samenvatting-poster OF op outro-wrap start de outro
+  function startOutro() {
+    if (!outroLoaded || !outroVideo) return;
+    if (outroVideo.paused) {
+      outroVideo.currentTime = 0;
+      outroVideo.play().catch(() => {});
+    }
+  }
+
+  if (centerPoster) {
+    centerPoster.addEventListener('mouseenter', startOutro);
+    centerPoster.addEventListener('click', () => {
+      if (!outroLoaded || !outroVideo) return;
+      if (outroVideo.paused) outroVideo.play().catch(() => {});
+      else outroVideo.pause();
     });
+  }
+
+  if (outroWrap && outroVideo) {
+    outroWrap.addEventListener('mouseenter', startOutro);
     outroWrap.addEventListener('click', () => {
       if (outroVideo.paused) outroVideo.play().catch(() => {});
       else outroVideo.pause();
