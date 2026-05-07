@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModal();
   initPrintButtons();
   initAskMarien();
+  initSollicitatie();
 
   // Footer year
   const fyEl = document.getElementById('footer-year');
@@ -1501,4 +1502,119 @@ function matchQuestion(q) {
   ];
   const idx = q.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % grappig.length;
   return { text: grappig[idx], blocked: true };
+}
+
+/* ============================================================
+   SOLLICITATIE OVERLAY
+   ============================================================ */
+function initSollicitatie() {
+  const stage      = document.getElementById('soll-stage');
+  const trigger    = document.getElementById('soll-trigger');
+  const backBtn    = document.getElementById('soll-back');
+  const introVideo = document.getElementById('spider-intro');
+  const centerLabel= document.getElementById('spider-center-label');
+  const videoLink  = document.getElementById('soll-video-link');
+  const sats       = Array.from(document.querySelectorAll('.spider-sat'));
+
+  if (!stage || !trigger) return;
+
+  const watchedVideos = new Set();
+  let outroLoaded = false;
+
+  /* ── Open overlay ── */
+  function openStage() {
+    stage.hidden = false;
+    // kleine vertraging zodat hidden→display transition werkt
+    requestAnimationFrame(() => {
+      stage.classList.add('active');
+    });
+    document.body.style.overflow = 'hidden';
+    stage.scrollTop = 0;
+    // Start intro
+    if (introVideo) {
+      introVideo.currentTime = 0;
+      introVideo.play().catch(() => {});
+    }
+  }
+
+  /* ── Sluit overlay ── */
+  function closeStage() {
+    stage.classList.remove('active');
+    document.body.style.overflow = '';
+    // Pauzeer alle videos
+    stage.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
+    // Verwijder hidden na transitie
+    stage.addEventListener('transitionend', () => {
+      if (!stage.classList.contains('active')) stage.hidden = true;
+    }, { once: true });
+  }
+
+  trigger.addEventListener('click', openStage);
+  backBtn.addEventListener('click', closeStage);
+
+  // Sluit ook via Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && stage.classList.contains('active')) closeStage();
+  });
+
+  /* ── Scroll naar video paneel ── */
+  if (videoLink) {
+    videoLink.addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('soll-video-section')
+        .scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  /* ── Satelliet hover: play/pause ── */
+  sats.forEach(sat => {
+    const video = sat.querySelector('.spider-video');
+    if (!video) return;
+
+    sat.addEventListener('mouseenter', () => {
+      video.play().catch(() => {});
+    });
+    sat.addEventListener('mouseleave', () => {
+      if (!video.ended) video.pause();
+    });
+    // Touch: tap om te togglen
+    sat.addEventListener('click', () => {
+      if (video.paused) video.play().catch(() => {});
+      else video.pause();
+    });
+
+    /* Bijhouden welke gezien zijn */
+    video.addEventListener('ended', () => {
+      sat.classList.add('watched');
+      watchedVideos.add(sat.dataset.sat);
+      checkAllWatched();
+    });
+  });
+
+  /* ── Alle 5 gezien → wissel naar Outro ── */
+  function checkAllWatched() {
+    if (watchedVideos.size < 5 || outroLoaded) return;
+    outroLoaded = true;
+
+    // Swap center video naar Outro
+    if (introVideo) {
+      introVideo.pause();
+      introVideo.src = 'assets/Outro.mov';
+      introVideo.classList.add('outro-active');
+      introVideo.load();
+      introVideo.play().catch(() => {});
+      if (centerLabel) {
+        centerLabel.textContent = 'Outro';
+        centerLabel.style.color = 'var(--color-green)';
+      }
+    }
+  }
+
+  /* ── Center video klikbaar ── */
+  if (introVideo) {
+    introVideo.addEventListener('click', () => {
+      if (introVideo.paused) introVideo.play().catch(() => {});
+      else introVideo.pause();
+    });
+  }
 }

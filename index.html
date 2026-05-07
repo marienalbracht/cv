@@ -107,11 +107,93 @@
 
     </div>
 
+    <!-- Sollicitatie trigger -->
+    <button class="soll-trigger" id="soll-trigger" aria-label="Bekijk sollicitatiebrief">
+      <span class="soll-trigger-label">Naar sollicitatie</span>
+      <span class="soll-trigger-arrow">&#8594;</span>
+    </button>
+
     <a href="#dashboard" class="scroll-indicator" aria-label="Naar mijn profiel">
       <span>Naar mijn profiel</span>
       <div class="scroll-arrow"></div>
     </a>
   </section>
+
+  <!-- ======== SOLLICITATIE OVERLAY ======== -->
+  <div class="soll-stage" id="soll-stage" aria-modal="true" role="dialog" aria-label="Sollicitatie" hidden>
+
+    <!-- Terug knop -->
+    <button class="soll-back" id="soll-back" aria-label="Terug naar CV">
+      <span class="soll-back-arrow">&#8592;</span> Terug naar CV
+    </button>
+
+    <!-- ── PANEEL A: Sollicitatiebrief ── -->
+    <div class="soll-panel soll-panel--letter">
+      <div class="soll-panel-inner">
+        <span class="soll-eyebrow">Sollicitatie</span>
+        <h2 class="soll-title">Projectleider bij AFAS</h2>
+        <p class="soll-subtitle">Bekijk mijn volledige sollicitatiebrief als PDF</p>
+        <a class="soll-download-btn"
+           href="assets/Sollicitatiebrief projectleider.pdf"
+           download="Sollicitatiebrief Marien Albracht.pdf"
+           target="_blank"
+           aria-label="Download sollicitatiebrief als PDF">
+          <span>&#8681; Download sollicitatiebrief</span>
+        </a>
+        <a class="soll-scroll-hint" href="#soll-video-section" id="soll-video-link">
+          <span>Hoe zie ik projectleiding?</span>
+          <div class="soll-scroll-arrow"></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── PANEEL B: Video spider ── -->
+    <div class="soll-panel soll-panel--video" id="soll-video-section">
+      <div class="soll-panel-inner">
+        <span class="soll-eyebrow">Mijn visie op projectleiding</span>
+        <h2 class="soll-title soll-title--video">In 5 thema's</h2>
+
+        <div class="video-spider" id="video-spider">
+          <!-- Center: Intro (wordt Outro na alle 5) -->
+          <div class="spider-center">
+            <video class="spider-video spider-video--center" id="spider-intro"
+                   src="assets/Intro.mov" playsinline preload="metadata"
+                   aria-label="Intro"></video>
+            <div class="spider-center-label" id="spider-center-label">Intro</div>
+          </div>
+
+          <!-- Satelliet 1 — Regisseur -->
+          <div class="spider-sat" data-sat="0" style="--angle:0deg" aria-label="Regisseur">
+            <video class="spider-video" src="assets/Film 1.mov" playsinline preload="metadata"></video>
+            <div class="spider-sat-label">Regisseur</div>
+          </div>
+          <!-- Satelliet 2 — Flair -->
+          <div class="spider-sat" data-sat="1" style="--angle:72deg" aria-label="Flair">
+            <video class="spider-video" src="assets/Film 2.mov" playsinline preload="metadata"></video>
+            <div class="spider-sat-label">Flair</div>
+          </div>
+          <!-- Satelliet 3 — Toegankelijk -->
+          <div class="spider-sat" data-sat="2" style="--angle:144deg" aria-label="Toegankelijk">
+            <video class="spider-video" src="assets/Film 3.mov" playsinline preload="metadata"></video>
+            <div class="spider-sat-label">Toegankelijk</div>
+          </div>
+          <!-- Satelliet 4 — Autoriteit -->
+          <div class="spider-sat" data-sat="3" style="--angle:216deg" aria-label="Autoriteit">
+            <video class="spider-video" src="assets/Film 4.mov" playsinline preload="metadata"></video>
+            <div class="spider-sat-label">Autoriteit</div>
+          </div>
+          <!-- Satelliet 5 — Innovatief -->
+          <div class="spider-sat" data-sat="4" style="--angle:288deg" aria-label="Innovatief">
+            <video class="spider-video" src="assets/Film 5.mov" playsinline preload="metadata"></video>
+            <div class="spider-sat-label">Innovatief</div>
+          </div>
+        </div>
+
+        <p class="spider-hint">Beweeg over een thema om de video te starten</p>
+      </div>
+    </div>
+
+  </div><!-- /soll-stage -->
 
   <!-- ======== CHATBOT VENSTER ======== -->
   <div class="chat-window" id="chat-window" aria-live="polite" aria-label="Chat met Marien" hidden>
