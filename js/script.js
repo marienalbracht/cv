@@ -1706,10 +1706,10 @@ function initSollicitatie() {
       markWatched(sat);
     });
 
-    // Tel als 'gezien' na 3 seconden afspelen
+    // Tel als 'gezien' na 0,5 seconden afspelen
     const satKey = sat.dataset.sat;
     video.addEventListener('timeupdate', function onTime() {
-      if (video.currentTime >= 1) {
+      if (video.currentTime >= 0.5) {
         video.removeEventListener('timeupdate', onTime);
         markWatched(sat);
       }
@@ -1731,16 +1731,36 @@ function initSollicitatie() {
     checkAllWatched();
   }
 
-  /* ── Alle 5 gezien → speel outro af ── */
+  /* ── Alle 5 gezien → speel outro af (alleen als geen film speelt) ── */
   function checkAllWatched() {
     if (watchedVideos.size < 5 || !introVideo) return;
-    // Zorg dat outro geladen is (kan al zijn door eerdere hover)
+
+    // Wacht tot geen enkel satelliet-filmpje meer afspeelt
+    const anyPlaying = sats.some(s => {
+      const v = s.querySelector('.spider-video');
+      return v && !v.paused;
+    });
+    if (anyPlaying) {
+      // Probeer opnieuw zodra het actieve filmpje stopt
+      const waiting = sats.find(s => {
+        const v = s.querySelector('.spider-video');
+        return v && !v.paused;
+      });
+      if (waiting) {
+        const wv = waiting.querySelector('.spider-video');
+        wv.addEventListener('pause', checkAllWatched, { once: true });
+        wv.addEventListener('ended', checkAllWatched, { once: true });
+      }
+      return;
+    }
+
     if (!outroLoaded) switchToOutro();
+    // Verberg poster zodat outro direct zichtbaar is
+    if (centerPoster) centerPoster.hidden = true;
     introVideo.currentTime = 0;
     const playPromise = introVideo.play();
     if (playPromise !== undefined) {
       playPromise.catch(() => {
-        // Nog niet genoeg gebufferd — wacht op canplay
         introVideo.addEventListener('canplay', () => {
           introVideo.currentTime = 0;
           introVideo.play().catch(() => {});
