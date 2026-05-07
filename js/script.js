@@ -148,7 +148,7 @@ function buildDashboard() {
       icon: '🏛️',
       title: 'Projecten',
       preview: `<span class="dash-badge dash-badge--edu">🏫 Onderwijs</span><span class="dash-badge dash-badge--gov">🏦 Overheid</span><br><span style="color:var(--color-muted);font-size:.78rem;margin-top:.4rem;display:inline-block;">30+ organisaties begeleid</span>`,
-      cta: 'Bekijk alle klanten →',
+      cta: 'Bekijk alle projecten →',
     },
     {
       id: 'hobbies',
@@ -1761,9 +1761,23 @@ function initSollicitatie() {
     });
   });
 
+  /* ── Licht de volgende (onbekeken) satelliet op ── */
+  function highlightNext(afterSat) {
+    // Verwijder highlight van alle satellieten
+    sats.forEach(s => s.classList.remove('next-hint'));
+    if (outroLoaded) return;
+
+    // Bepaal volgorde op data-num (1..5)
+    const ordered = [...sats].sort((a, b) => +a.dataset.num - +b.dataset.num);
+    const afterNum = afterSat ? +afterSat.dataset.num : 0;
+    const next = ordered.find(s => +s.dataset.num > afterNum && !s.classList.contains('watched'));
+    if (next) next.classList.add('next-hint');
+  }
+
   function markWatched(sat) {
     if (watchedVideos.has(sat.dataset.sat)) return;
     sat.classList.add('watched');
+    sat.classList.remove('next-hint');
     watchedVideos.add(sat.dataset.sat);
     if (svgLines) {
       const line = svgLines.querySelector(`[data-line-idx="${sats.indexOf(sat)}"]`);
@@ -1773,6 +1787,7 @@ function initSollicitatie() {
         line.style.strokeDasharray = 'none';
       }
     }
+    highlightNext(sat);
     checkAllWatched();
   }
 
@@ -1816,9 +1831,10 @@ function initSollicitatie() {
 
   /* ── Center video: intro afgelopen → switch naar outro; hover op poster start outro ── */
   if (introVideo) {
-    // Intro volledig afgespeeld → laad outro + toon poster
+    // Intro volledig afgespeeld → laad outro + toon poster + licht Film 1 op
     introVideo.addEventListener('ended', () => {
       if (!outroLoaded) switchToOutro();
+      highlightNext(null);
     });
 
     const spiderCenter = document.querySelector('.spider-center');
