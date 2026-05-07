@@ -1508,20 +1508,26 @@ function matchQuestion(q) {
    SOLLICITATIE OVERLAY
    ============================================================ */
 function initSollicitatie() {
-  const stage      = document.getElementById('soll-stage');
-  const trigger    = document.getElementById('soll-trigger');
-  const backBtn    = document.getElementById('soll-back');
-  const introVideo = document.getElementById('spider-intro');
-  const centerLabel= document.getElementById('spider-center-label');
-  const videoLink  = document.getElementById('soll-video-link');
-  const spiderWrap = document.getElementById('video-spider');
-  const svgLines   = document.getElementById('spider-lines');
-  const sats       = Array.from(document.querySelectorAll('.spider-sat'));
+  const stage       = document.getElementById('soll-stage');
+  const trigger     = document.getElementById('soll-trigger');
+  const backBtn     = document.getElementById('soll-back');
+  const introVideo  = document.getElementById('spider-intro');
+  const centerLabel = document.getElementById('spider-center-label');
+  const centerPoster= document.getElementById('spider-center-poster');
+  const videoLink   = document.getElementById('soll-video-link');
+  const spiderWrap  = document.getElementById('video-spider');
+  const svgLines    = document.getElementById('spider-lines');
+  const sats        = Array.from(document.querySelectorAll('.spider-sat'));
 
   if (!stage || !trigger) return;
 
   const watchedVideos = new Set();
   let outroLoaded = false;
+
+  /* ── Toon outro-poster op center-video ── */
+  function showOutroPoster() {
+    if (centerPoster) { centerPoster.hidden = false; }
+  }
 
   /* ── Wissel center-video naar outro ── */
   function switchToOutro() {
@@ -1532,6 +1538,7 @@ function initSollicitatie() {
     introVideo.classList.add('outro-active');
     introVideo.load();
     if (centerLabel) { centerLabel.textContent = 'Outro'; centerLabel.style.color = 'var(--color-green)'; }
+    showOutroPoster();
   }
 
   /* ── Reset alles terug naar intro-staat ── */
@@ -1543,6 +1550,7 @@ function initSollicitatie() {
     });
     watchedVideos.clear();
     outroLoaded = false;
+    if (centerPoster) { centerPoster.hidden = true; }
     if (introVideo) {
       introVideo.pause();
       introVideo.src = 'assets/Intro.mov';
@@ -1684,18 +1692,33 @@ function initSollicitatie() {
     video.addEventListener('ended', () => {
       sat.classList.remove('playing');
       sat.classList.add('watched');
-      watchedVideos.add(sat.dataset.sat);
-      if (svgLines) {
-        const line = svgLines.querySelector(`[data-line-idx="${sats.indexOf(sat)}"]`);
-        if (line) {
-          line.classList.remove('active');
-          line.style.stroke = 'rgba(60,198,88,.4)';
-          line.style.strokeDasharray = 'none';
-        }
+      markWatched(sat);
+    });
+
+    // Tel als 'gezien' na 3 seconden afspelen
+    const satKey = sat.dataset.sat;
+    video.addEventListener('timeupdate', function onTime() {
+      if (video.currentTime >= 3) {
+        video.removeEventListener('timeupdate', onTime);
+        markWatched(sat);
       }
-      checkAllWatched();
     });
   });
+
+  function markWatched(sat) {
+    if (watchedVideos.has(sat.dataset.sat)) return;
+    sat.classList.add('watched');
+    watchedVideos.add(sat.dataset.sat);
+    if (svgLines) {
+      const line = svgLines.querySelector(`[data-line-idx="${sats.indexOf(sat)}"]`);
+      if (line) {
+        line.classList.remove('active');
+        line.style.stroke = 'rgba(60,198,88,.4)';
+        line.style.strokeDasharray = 'none';
+      }
+    }
+    checkAllWatched();
+  }
 
   /* ── Alle 5 gezien → speel outro af ── */
   function checkAllWatched() {
@@ -1715,8 +1738,15 @@ function initSollicitatie() {
     }
   }
 
-  /* ── Center video klikbaar ── */
+  /* ── Center video: hover start outro, klik toggle ── */
   if (introVideo) {
+    // Hover: toon outro direct als het al geladen is
+    introVideo.addEventListener('mouseenter', () => {
+      if (outroLoaded) {
+        introVideo.currentTime = 0;
+        introVideo.play().catch(() => {});
+      }
+    });
     introVideo.addEventListener('click', () => {
       if (introVideo.paused) introVideo.play().catch(() => {});
       else introVideo.pause();
