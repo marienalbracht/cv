@@ -1599,11 +1599,8 @@ function initSollicitatie() {
 
   /* ── Eén video tegelijk ── */
   function pauseAllExcept(keepSat) {
-    // Stop intro/outro bij starten satelliet
-    if (keepSat) {
-      switchToOutro();
-      if (introVideo && !introVideo.paused) introVideo.pause();
-    }
+    // Pauzeer intro als het speelt (maar wissel nog niet naar outro)
+    if (keepSat && introVideo && !introVideo.paused) introVideo.pause();
 
     sats.forEach(sat => {
       if (sat === keepSat) return;
@@ -1816,8 +1813,13 @@ function initSollicitatie() {
     }
   }
 
-  /* ── Center video: hover op poster start outro, verlaat = pauze ── */
+  /* ── Center video: intro afgelopen → switch naar outro; hover op poster start outro ── */
   if (introVideo) {
+    // Intro volledig afgespeeld → laad outro + toon poster
+    introVideo.addEventListener('ended', () => {
+      if (!outroLoaded) switchToOutro();
+    });
+
     const spiderCenter = document.querySelector('.spider-center');
 
     if (centerPoster) {
