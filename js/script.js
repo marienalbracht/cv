@@ -1614,6 +1614,7 @@ function initSollicitatie() {
     function startPlay() {
       pauseAllExcept(sat);
       sat.classList.add('playing');
+      video.currentTime = 0;
       video.play().catch(() => {});
     }
     function stopPlay() {
