@@ -1548,6 +1548,9 @@ function initSollicitatie() {
 
   /* ── Eén video tegelijk ── */
   function pauseAllExcept(keepSat) {
+    // Pauzeer intro/outro wanneer een satelliet start
+    if (keepSat && introVideo && !introVideo.paused) introVideo.pause();
+
     sats.forEach(sat => {
       if (sat === keepSat) return;
       const v = sat.querySelector('.spider-video');
