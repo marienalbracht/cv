@@ -1663,9 +1663,7 @@ function initSollicitatie() {
     stage.classList.remove('active');
     document.body.style.overflow = '';
     history.replaceState(null, '', '#');
-    // Herstel de zijbalk (IntersectionObserver neemt het daarna over)
-    const navbar = document.getElementById('navbar');
-    if (navbar) { navbar.classList.remove('nav-hidden'); document.body.classList.remove('hero-active'); }
+    // Laat de IntersectionObserver de navbar-zichtbaarheid bepalen (geen flash)
     resetSpider();
     if (svgLines) svgLines.innerHTML = '';
     stage.addEventListener('transitionend', () => {
