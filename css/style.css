@@ -989,12 +989,17 @@ body.hero-active {
 -------------------------------------------------------- */
 .section-subtitle {
   text-align: center; color: var(--color-muted); font-size: .88rem;
-  margin-top: -.5rem; margin-bottom: 2rem; font-style: italic;
+  margin-top: -.5rem; margin-bottom: 1rem; font-style: italic;
 }
 
 /* Kaarten container */
+#projects.section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
 .clients-cards {
-  display: flex; flex-direction: column; gap: 1.25rem;
+  display: flex; flex-direction: column; gap: .6rem;
 }
 
 /* Jaar-kaart */
@@ -1006,8 +1011,8 @@ body.hero-active {
   overflow: hidden;
 }
 .client-card-year {
-  padding: .65rem 1.4rem;
-  font-size: .8rem; font-weight: 900; letter-spacing: .06em;
+  padding: .4rem 1.2rem;
+  font-size: .78rem; font-weight: 900; letter-spacing: .06em;
   text-transform: uppercase; font-family: var(--font-heading);
   color: var(--color-blue);
   border-bottom: 1px solid var(--color-blue3);
@@ -1017,7 +1022,7 @@ body.hero-active {
   display: grid; grid-template-columns: 1fr 1fr;
 }
 .client-col {
-  padding: 1.1rem 1.4rem;
+  padding: .6rem 1.2rem;
 }
 .client-col--edu {
   border-right: 1px solid var(--color-blue3);
@@ -1025,7 +1030,7 @@ body.hero-active {
 .client-col-label {
   font-size: .72rem; font-weight: 700; letter-spacing: .07em;
   text-transform: uppercase; font-family: var(--font-heading);
-  margin-bottom: .65rem;
+  margin-bottom: .35rem;
 }
 .client-col--edu .client-col-label { color: var(--color-blue); }
 .client-col--gov .client-col-label { color: #c05c00; }
