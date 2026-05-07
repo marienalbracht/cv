@@ -1614,20 +1614,30 @@ function initSollicitatie() {
   }
 
   /* ── Open overlay ── */
-  function openStage() {
+  function openStage(scrollToVideo) {
     stage.hidden = false;
     requestAnimationFrame(() => { stage.classList.add('active'); });
     document.body.style.overflow = 'hidden';
-    stage.scrollTop = 0;
-    // SVG lijnen tekenen na render
-    setTimeout(drawLines, 120);
-    // Intro start pas wanneer het video-paneel in beeld komt (zie observer hieronder)
+    if (scrollToVideo) {
+      // Scroll naar video-paneel na transitie
+      setTimeout(() => {
+        const vs = document.getElementById('soll-video-section');
+        if (vs) vs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(drawLines, 400);
+      }, 300);
+      history.replaceState(null, '', '#visie');
+    } else {
+      stage.scrollTop = 0;
+      setTimeout(drawLines, 120);
+      history.replaceState(null, '', '#sollicitatie');
+    }
   }
 
   /* ── Sluit overlay ── */
   function closeStage() {
     stage.classList.remove('active');
     document.body.style.overflow = '';
+    history.replaceState(null, '', '#');
     resetSpider();
     if (svgLines) svgLines.innerHTML = '';
     stage.addEventListener('transitionend', () => {
@@ -1635,8 +1645,17 @@ function initSollicitatie() {
     }, { once: true });
   }
 
-  trigger.addEventListener('click', openStage);
+  trigger.addEventListener('click', () => openStage(false));
   backBtn.addEventListener('click', closeStage);
+
+  /* ── Deep-link: open overlay direct op juiste paneel bij laden pagina ── */
+  function checkDeepLink() {
+    const hash = location.hash;
+    if (hash === '#sollicitatie') { openStage(false); }
+    else if (hash === '#visie')   { openStage(true); }
+  }
+  checkDeepLink();
+  window.addEventListener('hashchange', checkDeepLink);
 
   /* ── Naar sollicitatiebrief knop (vanuit video-paneel) ── */
   const toLetterBtn = document.getElementById('soll-to-letter-btn');
@@ -1674,6 +1693,7 @@ function initSollicitatie() {
       e.preventDefault();
       document.getElementById('soll-video-section')
         .scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', '#visie');
       setTimeout(drawLines, 600);
     });
   }
