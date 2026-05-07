@@ -268,20 +268,26 @@ body.hero-active {
   transform: translateY(-2px);
 }
 
-/* Scroll indicator */
+/* Scroll indicator — oranje pill, onderin hero-center */
 .scroll-indicator {
-  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-  z-index: 1; display: flex; flex-direction: column; align-items: center; gap: .5rem;
-  text-decoration: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: .6rem;
+  background: var(--color-orange);
+  color: white; border-radius: var(--r-full);
+  padding: .75rem 1.6rem; font-size: .95rem; font-weight: 700;
+  font-family: var(--font-heading); text-decoration: none;
+  box-shadow: 0 4px 18px rgba(245,159,57,.4);
+  transition: background var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
+  margin-top: .75rem;
+  cursor: pointer;
 }
-.scroll-indicator:hover span { color: rgba(255,255,255,.85); }
-.scroll-indicator:hover .scroll-arrow { border-color: rgba(255,255,255,.8); }
-.scroll-indicator span { font-size: .72rem; color: rgba(255,255,255,.5); letter-spacing: .12em; text-transform: uppercase; transition: color var(--t-fast); }
-.scroll-arrow {
-  width: 26px; height: 26px;
-  border-right: 2.5px solid rgba(255,255,255,.45); border-bottom: 2.5px solid rgba(255,255,255,.45);
-  transform: rotate(45deg); animation: scrollBounce 1.6s ease-in-out infinite;
-  transition: border-color var(--t-fast);
+.scroll-indicator:hover {
+  background: #e08a20;
+  transform: translateY(3px);
+  box-shadow: 0 8px 26px rgba(245,159,57,.55);
+}
+.scroll-indicator-arrow {
+  font-size: 1.1rem; line-height: 1;
+  animation: scrollBounce 1.4s ease-in-out infinite;
 }
 
 /* --------------------------------------------------------
