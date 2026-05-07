@@ -1881,20 +1881,13 @@ function initSollicitatie() {
     const spiderCenter = document.querySelector('.spider-center');
 
     if (centerPoster) {
-      centerPoster.addEventListener('mouseenter', () => {
-        if (outroLoaded) {
+      centerPoster.addEventListener('click', () => {
+        if (!outroLoaded) return;
+        if (introVideo.paused) {
           introVideo.currentTime = 0;
           introVideo.play().catch(() => {});
-        }
-      });
-    }
-
-    // Muis verlaat het hele center-gebied → pauze
-    if (spiderCenter) {
-      spiderCenter.addEventListener('mouseleave', () => {
-        if (outroLoaded && !introVideo.paused) {
+        } else {
           introVideo.pause();
-          introVideo.currentTime = 0;
         }
       });
     }

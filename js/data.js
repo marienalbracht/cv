@@ -12,7 +12,7 @@ const cvData = {
     email:    "marien.albracht@afas.nl",
     phone:    "+31 6 40 96 82 13",
     location: "Zwolle, Nederland",
-    linkedin: "linkedin.com/in/marienalbracht",
+    linkedin: "nl.linkedin.com/in/marien-albracht-8a823193",
   },
 
   typewriterTexts: [
