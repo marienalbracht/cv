@@ -1541,7 +1541,7 @@ function initSollicitatie() {
     if (outroLoaded || !introVideo) return;
     outroLoaded = true;
     introVideo.pause();
-    introVideo.src = 'assets/Outro.mov';
+    introVideo.src = 'assets/Outro.mp4';
     introVideo.classList.add('outro-active');
     introVideo.load();
     if (centerLabel) { centerLabel.textContent = 'Outro'; centerLabel.style.color = 'var(--color-green)'; }
@@ -1560,7 +1560,7 @@ function initSollicitatie() {
     if (centerPoster) { centerPoster.hidden = true; }
     if (introVideo) {
       introVideo.pause();
-      introVideo.src = 'assets/Intro.mov';
+      introVideo.src = 'assets/Intro.mp4';
       introVideo.classList.remove('outro-active');
       introVideo.load();
     }
