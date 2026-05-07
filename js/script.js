@@ -1699,9 +1699,20 @@ function initSollicitatie() {
 
   /* ── Alle 5 gezien → speel outro af ── */
   function checkAllWatched() {
-    if (watchedVideos.size < 5) return;
-    // Outro is al geladen bij eerste hover; speel nu af
-    if (introVideo) introVideo.play().catch(() => {});
+    if (watchedVideos.size < 5 || !introVideo) return;
+    // Zorg dat outro geladen is (kan al zijn door eerdere hover)
+    if (!outroLoaded) switchToOutro();
+    introVideo.currentTime = 0;
+    const playPromise = introVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Nog niet genoeg gebufferd — wacht op canplay
+        introVideo.addEventListener('canplay', () => {
+          introVideo.currentTime = 0;
+          introVideo.play().catch(() => {});
+        }, { once: true });
+      });
+    }
   }
 
   /* ── Center video klikbaar ── */
