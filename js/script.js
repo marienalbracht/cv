@@ -1574,7 +1574,7 @@ function initSollicitatie() {
     stage.scrollTop = 0;
     // SVG lijnen tekenen na render
     setTimeout(drawLines, 120);
-    if (introVideo) { introVideo.currentTime = 0; introVideo.play().catch(() => {}); }
+    // Intro start pas wanneer het video-paneel in beeld komt (zie observer hieronder)
   }
 
   /* ── Sluit overlay ── */
@@ -1591,6 +1591,23 @@ function initSollicitatie() {
 
   trigger.addEventListener('click', openStage);
   backBtn.addEventListener('click', closeStage);
+
+  /* ── Start intro wanneer video-paneel in beeld scrollt ── */
+  const videoSection = document.getElementById('soll-video-section');
+  if (videoSection && introVideo) {
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && stage.classList.contains('active')) {
+          introVideo.currentTime = 0;
+          introVideo.play().catch(() => {});
+          setTimeout(drawLines, 80);
+        } else {
+          introVideo.pause();
+        }
+      });
+    }, { threshold: 0.4 });
+    videoObserver.observe(videoSection);
+  }
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && stage.classList.contains('active')) closeStage();
   });
