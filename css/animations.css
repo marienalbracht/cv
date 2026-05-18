@@ -205,3 +205,41 @@
 .stats-grid .stat-card:nth-child(2) { transition-delay: .12s; }
 .stats-grid .stat-card:nth-child(3) { transition-delay: .19s; }
 .stats-grid .stat-card:nth-child(4) { transition-delay: .26s; }
+
+/* --------------------------------------------------------
+   REDUCED MOTION — toon alles direct zonder animatie
+   (macOS/iOS "Reduce Motion", Firefox, sommige browsers)
+-------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  /* Hero-entrance animaties direct afgerond */
+  .hero-greeting,
+  .hero-name,
+  .hero-title-wrap,
+  .hero-subtitle,
+  .hero-actions,
+  .hero-avatar,
+  .scroll-indicator {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  /* Scroll-reveal: direct zichtbaar zonder overgang */
+  .section-title,
+  .about-text,
+  .stats-grid,
+  .timeline-item,
+  .exp-item,
+  .skill-category,
+  .project-card,
+  .certificate-badge,
+  .hobby-item,
+  .contact-item,
+  .stat-card,
+  .dashboard-tile,
+  .dashboard-intro {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
